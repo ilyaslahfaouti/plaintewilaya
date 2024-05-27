@@ -23,7 +23,7 @@ const Home = () => {
                 <Link>S'inscrire</Link>
               </button>
               <button className=" font-Poppins font-medium text-[1.5rem] py-1 px-4 bg-[rgba(0,255,55,0.57)] hover:bg-[rgba(0,255,55,0.75)] text-[#ffff]  rounded-md ">
-                <Link>Conexion</Link>
+                <Link>Connexion</Link>
               </button>
               
             </div>
