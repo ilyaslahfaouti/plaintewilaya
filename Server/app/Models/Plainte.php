@@ -9,11 +9,11 @@ class Plainte extends Model
 {
     use HasFactory;
 
-    protected $table = 'Plaintes';
-    protected $primaryKey = 'ID_plainte';
+    protected $table = 'plaintes';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'ID_utilisateur',
+        'user_id',
         'Plainte',
         'Image',
         'Latitude',

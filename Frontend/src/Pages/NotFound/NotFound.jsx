@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
 
-const NotFound = () => {
+const NotFound = ({ errMessage }) => {
+  
   return (
-    <div>NotFound</div>
-  )
-}
+  <div className="text-xl flex justify-center items-center h-screen">
+    {
+      errMessage ? errMessage : 'Page Note Found'
+    }
+  </div>
+);
+};
 
-export default NotFound
+export default NotFound;

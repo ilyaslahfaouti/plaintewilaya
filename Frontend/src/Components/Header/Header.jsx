@@ -10,17 +10,18 @@ const Header = () => {
   };
   return (
     <>
-      <header className=" bg-red-100 rounded-b-lg ">
+      <header className=" bg-[#ffff] rounded-b-lg ">
         <div className="container m-auto">
         <div className=" flex justify-between  items-center ">
             <div className="logo">
                 <img src={Logo} alt="logo" className="w-[200px]" />
             </div>
             <div className="ri">
-              <select id="language-select" onChange={switchLang}>
+              <select id="language-select" className="bg-slate-100" onChange={switchLang}>
+                <option value="fr">fr</option>
                 <option value="en">en</option>
                 <option value="ar">ar</option>
-                <option value="fr">fr</option>
+                
               </select>
             </div>
           </div>
