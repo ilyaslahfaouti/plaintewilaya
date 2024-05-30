@@ -10,13 +10,14 @@ const userSlice = createSlice({
     name:'user',
     initialState:init,
     reducers:{
-        attemptLogin(state,action){
-            const newUser = action.payload
-            state.user = {...newUser}
+        saveUser(state,action){
+            const user = action.payload
+            state.user = {...user}
             state.isAuth = true
         },
-        attemptLogout(state,action){
+        forgetUser(state,action){
             state.isAuth = false
+            state.user = {}
         },
         
     }

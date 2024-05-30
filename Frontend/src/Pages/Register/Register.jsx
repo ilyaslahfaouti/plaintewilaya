@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./../../Components/Header/Header";
+import AuthComponent from "../../Components/AuthComponent/AuthComponent";
 import { useState, useEffect } from "react";
 import { getCommunes, validate, signup } from "./../Dependencies.cjs";
 import "./Register.css";
@@ -53,13 +54,14 @@ const Register = () => {
     if (!validated.valid) {
       setErrs({ ...validated.errors });
     } else {
+      setErrs({})
       try {
         const response = await signup(formData);
 
         if (response.status === 201) {
-          window.localStorage.setItem("ACCESS_TOKEN", "TEST");
-
+          window.localStorage.setItem("ACCESS_TOKEN", response.data.token);
           navigate('/verification');
+
 
           return "";
         }
@@ -78,19 +80,14 @@ const Register = () => {
   return (
     <>
       <Header />
-      <section className="absolute left-0 top-0 right-0 bottom-0 flex justify-center items-center">
-        <div className="container">
-          <div className="form-holder bg-[#ffff] rounded-md px-[3rem] pb-10 mx-[4rem] ">
-            <div className="title text-3xl  font-bold font-Poppins py-6 capitalize">
-              <h2>inscription</h2>
-            </div>
-            <div className="form  ">
+      <AuthComponent titile='register'>
+      <div className="form ">
               <form action="" onSubmit={handelSubmit}>
                 <div action="" className="grid grid-cols-2 ">
-                  <div className="pl-3 ">
+                  <div className="pl-3 mb-3 ">
                     <label
                       htmlFor="l_name"
-                      className="font-Poppins text-md block "
+                      className="font-Poppins text-md block mb-2 "
                     >
                       Nom
                     </label>
@@ -102,17 +99,17 @@ const Register = () => {
                       name="l_name"
                       id="l_name"
                       className={
-                        " transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 $ "
+                        " transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
                       }
                     />
                     <div className="error text-sm  text-red-600 pl-[6px]">
                       <span>{errs["l_name"]}</span>
                     </div>
                   </div>
-                  <div className="pl-3">
+                  <div className="pl-3 mb-3">
                     <label
                       htmlFor="f_name"
-                      className="font-Poppins text-md block "
+                      className="font-Poppins text-md block mb-2 "
                     >
                       Prenom
                     </label>
@@ -129,10 +126,10 @@ const Register = () => {
                       <span>{errs["f_name"]}</span>
                     </div>
                   </div>
-                  <div className="pl-3">
+                  <div className="pl-3 mb-3">
                     <label
                       htmlFor="email"
-                      className="font-Poppins text-md block  "
+                      className="font-Poppins text-md block mb-2  "
                     >
                       email
                     </label>
@@ -143,16 +140,16 @@ const Register = () => {
                       type="text"
                       name="email"
                       id="email"
-                      className="w-1/2 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
+                      className="w-2/3 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
                     />
                     <div className="error text-sm  text-red-600 pl-[6px]">
                       <span>{errs["email"]}</span>
                     </div>
                   </div>
-                  <div className="pl-3">
+                  <div className="pl-3 mb-3">
                     <label
                       htmlFor="tel"
-                      className="font-Poppins text-md block "
+                      className="font-Poppins text-md block mb-2 "
                     >
                       tel
                     </label>
@@ -170,10 +167,10 @@ const Register = () => {
                     </div>
                   </div>
 
-                  <div className="pl-3">
+                  <div className="pl-3 mb-3">
                     <label
                       htmlFor="commune"
-                      className="font-Poppins text-md block "
+                      className="font-Poppins text-md block mb-2 "
                     >
                       commune
                     </label>
@@ -198,10 +195,10 @@ const Register = () => {
                   </div>
 
                   <div className="grid col-span-2 grid-cols-2">
-                    <div className="pl-3 ">
+                    <div className="pl-3 mb-3 ">
                       <label
                         htmlFor="password"
-                        className="font-Poppins text-md block "
+                        className="font-Poppins text-md block mb-2 "
                       >
                         password
                       </label>
@@ -217,10 +214,10 @@ const Register = () => {
                         <span>{errs["password"]}</span>
                       </div>
                     </div>
-                    <div className="pl-3">
+                    <div className="pl-3 mb-3">
                       <label
                         htmlFor="password_confirmation"
-                        className="font-Poppins text-md block "
+                        className="font-Poppins text-md block mb-2 "
                       >
                         confirmation password
                       </label>
@@ -249,9 +246,7 @@ const Register = () => {
                 </div>
               </form>
             </div>
-          </div>
-        </div>
-      </section>
+      </AuthComponent>
     </>
   );
 };
