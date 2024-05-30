@@ -1,29 +1,17 @@
-import axios from "axios";
 import { axiosClient } from "../api/axios";
-import { useNavigate } from "react-router-dom";
 
+export const getCommunes = async () => {
+  try {
+    const csrf = await axiosClient.get("/sanctum/csrf-cookie");
+    const res = await fetch("http://localhost:8000/api/communes");
+    const data = res.json();
+    return data;
 
-
-
-
-
-
-
-
-
-export const getCommunes = async() => {
-  try{
-    const res = await fetch('http://localhost:8000/api/communes')
-    const data = res.json()
-    return data
-    
-  }catch{
-    console.log('err')
+  } catch {
+    console.log("err");
   }
-  
-  
 };
-const authErrors = (err)=>{
+const authErrors = (err) => {
   var errors = {
     l_name: "",
     f_name: "",
@@ -31,10 +19,9 @@ const authErrors = (err)=>{
     tel: "",
     commune: "",
     password: "",
-    "password_confirmation": "",
-  }
-  
-}
+    password_confirmation: "",
+  };
+};
 export const validate = (data) => {
   var valid = true;
   var errors = {
@@ -44,38 +31,32 @@ export const validate = (data) => {
     tel: "",
     commune: "",
     password: "",
-    "password_confirmation": "",
-  }
-  
-  for (const key in data){
-    if(data[key] === null ){
-      valid = false
-      errors[key] = "this field is required "
+    password_confirmation: "",
+  };
+
+  for (const key in data) {
+    if (data[key] === "") {
+      valid = false;
+      errors[key] = "this field is required ";
     }
   }
-  if(!valid){
-    return {valid,"errors":errors}
-  }else{
-    return {valid,"errors":errors}
+  if (!valid) {
+    return { valid, errors: errors };
+  } else {
+    return { valid };
   }
-  
-  
 };
 
-export const signup =async (data) => {
-  
-  const response = await fetch('http://localhost:8000/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-    
-    const res = await response.json();
-    
-    
-    return res
-    
+export const signup = async (data) => {
+  const csrf = await axiosClient.get("/sanctum/csrf-cookie");
+  try {
+    const res = await axiosClient
+      .post("/api/register", data)
+    return res;
+  } catch (error) {
+    return error
   }
   
+ 
+  
+};

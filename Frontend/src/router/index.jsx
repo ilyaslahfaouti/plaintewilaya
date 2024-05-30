@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "../Layouts/Layout";
+import GeussLayaout from "../Layouts/GeussLayaout";
+import ProtectedLayout from "../Layouts/ProtectedLayout";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
@@ -9,7 +10,7 @@ import EmailVerification from '../Pages/EmailVerification/EmailVerification'
 
 export const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <GeussLayaout />,
     children: [
       {
         path: "/",
@@ -23,6 +24,13 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
+      
+      
+    ],
+  },
+  {
+    element: <ProtectedLayout />,
+    children:[
       {
         path: "/dashbord",
         element: <Dashbord />,
@@ -31,7 +39,8 @@ export const router = createBrowserRouter([
         path: "/verification",
         element: <EmailVerification />,
       },
-    ],
+    ]
+
   },
 
   {

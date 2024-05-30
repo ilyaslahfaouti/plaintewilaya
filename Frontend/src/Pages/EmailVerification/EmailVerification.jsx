@@ -4,9 +4,11 @@ const EmailVerification = () => {
   return (
     <>
         
+        <section className='flex justify-center items-center'>
         <Link to={'/dashbord'}>
         <button>verify</button>
         </Link>
+        </section>
     </>
   )
 }

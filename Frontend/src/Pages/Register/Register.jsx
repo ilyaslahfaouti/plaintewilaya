@@ -3,10 +3,10 @@ import Header from "./../../Components/Header/Header";
 import { useState, useEffect } from "react";
 import { getCommunes, validate, signup } from "./../Dependencies.cjs";
 import "./Register.css";
-import { axiosClient } from "../../api/axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+
   const [communes, setCommunes] = useState([]);
   const [formData, setFormData] = useState({
     l_name: "",
@@ -15,17 +15,17 @@ const Register = () => {
     tel: "",
     commune: "",
     password: "",
-    "password_confirmation": "",
+    password_confirmation: "",
   });
   const [errs, setErrs] = useState({});
 
   const navigate = useNavigate();
   useEffect(() => {
-    const fetching = async () => {
+    const response = async () => {
       const data = await getCommunes();
       setCommunes([...data]);
     };
-    fetching();
+    response();
   }, []);
 
   const inputChange = (e) => {
@@ -45,28 +45,35 @@ const Register = () => {
       }
     }
   };
-  const handelSubmit = (e) => {
+
+  const handelSubmit = async (e) => {
     e.preventDefault();
-  };
-  const btnClick =async () => {
     const validated = validate(formData);
+
     if (!validated.valid) {
       setErrs({ ...validated.errors });
     } else {
       try {
-        const res = await signup(formData);
-        
-        if(res.errors){
-          setErrs({...res.errors})
-        }else{
-          navigate('/verification')
+        const response = await signup(formData);
+
+        if (response.status === 201) {
+          window.localStorage.setItem("ACCESS_TOKEN", "TEST");
+
+          navigate('/verification');
+
+          return "";
         }
-      } catch (e) {
-        console.log(e);
+
+        if (response.response.data.errors) {
+          setErrs({ ...response.response.data.errors });
+        }
+      } catch (err) {
+        console.log("err from register file");
+        console.log(err);
       }
     }
-    
   };
+  const btnClick = async () => {};
 
   return (
     <>
@@ -177,12 +184,11 @@ const Register = () => {
                       id="commune"
                       className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
                     >
-                      <option>----</option>
+                      <option value=""></option>
 
                       {communes.map((item, key) => (
                         <option key={key} value={item.commune_id}>
                           {item.nom_ar}
-                          
                         </option>
                       ))}
                     </select>

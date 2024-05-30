@@ -12,7 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-         
+        // $middleware->append(\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
+        // $middleware->append('throttle:api');
+        // $middleware->append(\Illuminate\Routing\Middleware\SubstituteBindings::class);
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
