@@ -53,7 +53,7 @@ const Login = () => {
   return (
     <>
       <Header />
-      <AuthComponent titile={"login"}>
+      <AuthComponent title={"login"}>
         <div className="form flex justify-center">
           <form onSubmit={onSubmit} action="">
             <div>

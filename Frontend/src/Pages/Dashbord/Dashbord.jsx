@@ -24,7 +24,7 @@ const Dashbord = () => {
             </Link>
           </div>
           <div className="item p-5">
-            <Link to={"/dashbord"}>
+            <Link to={"/plaint"}>
               <div className="hover:scale-[1.1] transition-all duration-[.3s]">
                 <div className="box border border-solid border-black rounded-md mb-4 ">
                   <img className="max-w-[200px]" src={Create} alt="" />

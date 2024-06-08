@@ -17,14 +17,13 @@ return new class extends Migration
             $table->string('tel');
             $table->string('l_name');
             $table->string('email')->unique();
-            $table->unsignedBigInteger('commune')->nullable();
             $table->string('password');
             $table->boolean('email_verified');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
-
-            // $table->foreign('commune')->references('commune_id')->on('communes');
+            
+        
             
         });
 
@@ -41,6 +40,7 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

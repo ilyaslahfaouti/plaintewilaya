@@ -37,7 +37,7 @@ const EmailVerification = () => {
   return (
     <>
       <Header />
-      <AuthComponent titile={"verification"}>
+      <AuthComponent title={"verification"}>
         <div className="content font-Poppins ">
           <p className="max-w-[60%]">
             Nous avons envoyé un lien de vérification à votre courriel. Veuillez

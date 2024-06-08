@@ -11,18 +11,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Plaintes', function (Blueprint $table) {
-            $table->id('id_plainte');
+        Schema::create('plaintes', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->text('Plainte')->nullable();
-            $table->dateTime('Date_heure')->nullable();
-            $table->unsignedBigInteger('commune')->nullable();
-            $table->unsignedBigInteger('status')->nullable();
-            $table->timestamps();
-
+            $table->longText('subject');
+            $table->longText('body');
+            $table->date('date');
+            $table->text('img')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('commune')->references('commune_id')->on('communes');
-            $table->foreign('status')->references('id')->on('statuts_plaintes');
+            $table->timestamps();
         });
     }
 

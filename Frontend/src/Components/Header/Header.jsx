@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { axiosClient } from "../../api/axios";
 import { userActons } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../Dependencies";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -27,18 +28,9 @@ const Header = () => {
     i18n.changeLanguage(lang);
   };
   const attemptLogout = async () => {
-    await axiosClient
-      .get("/api/logout")
-      .then((res) => {
-        console.log(res);
-        dispatch(userActons.forgetUser());
-        localStorage.removeItem("ACCESS_TOKEN");
-        // navigate('/login')
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log("loggin out");
+    dispatch(userActons.forgetUser());
+    const res = await logout();
+    navigate("/login");
   };
   return (
     <>

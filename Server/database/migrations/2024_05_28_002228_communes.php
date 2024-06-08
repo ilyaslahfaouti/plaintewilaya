@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('communes', function (Blueprint $table) {
-            $table->id('commune_id');
+            $table->id();
             $table->string('nom_ar')->nullable();
             $table->string('nom_fr')->nullable();
             $table->timestamps();

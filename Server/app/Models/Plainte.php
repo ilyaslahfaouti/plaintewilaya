@@ -14,27 +14,12 @@ class Plainte extends Model
 
     protected $fillable = [
         'user_id',
-        'Plainte',
-        'Image',
-        'Latitude',
-        'Longitude',
-        'Date_heure',
-        'ID_commune',
-        'ID_statut',
+        'commune',
+        'subject',
+        'body',
+        'date',
+        'img',
+
     ];
 
-    public function utilisateur()
-    {
-        return $this->belongsTo(Utilisateur::class, 'ID_utilisateur');
-    }
-
-    public function commune()
-    {
-        return $this->belongsTo(Commune::class, 'ID_commune');
-    }
-
-    public function statut()
-    {
-        return $this->belongsTo(Statut::class, 'ID_statut');
-    }
 }

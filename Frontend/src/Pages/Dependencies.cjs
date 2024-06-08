@@ -13,24 +13,15 @@ export const getCommunes = async () => {
 
 export const validate = (data) => {
   var valid = true;
-  var errors = {
-    // l_name: "",
-    // f_name: "",
-    // email: "",
-    // tel: "",
-    // commune: "",
-    // password: "",
-    // password_confirmation: "",
-  };
+  var errors = {};
 
   for (const key in data) {
-    if (data[key] === "") {
+    if (data[key].trim() == "" || data[key].trim() == null) {
       valid = false;
       errors = {
         ...errors,
         [key]: "this field is required",
       };
-      // errors[key] = "this field is required ";
     }
   }
   if (!valid) {
@@ -42,11 +33,10 @@ export const validate = (data) => {
 const getCsrf = async () => await axiosClient.get("/sanctum/csrf-cookie"); //you can use it after in each of signup and loginin functions
 
 export const signup = async (data) => {
-  const csrf = await axiosClient.get("/sanctum/csrf-cookie");
+  // const csrf = await axiosClient.get("/sanctum/csrf-cookie");
   try {
-    const res = await axiosClient.post("/api/register", data).catch((e) => {
-      console.log("cat erroro");
-    });
+    const res = await axiosClient.post("/api/register", data);
+
     return res;
   } catch (error) {
     return error;
@@ -63,14 +53,24 @@ export const loginin = async (data) => {
   }
 };
 
-export const  emailVerify = async ()=>{
+export const emailVerify = async () => {
   try {
-    const user = await axiosClient.get('/api/user');
-    const res = await axiosClient.post('/emailVerify',user.data)
-    console.log(res)
-    
+    const user = await axiosClient.get("/api/user");
+    const res = await axiosClient.post("/emailVerify", user.data);
+    console.log(res);
   } catch (error) {
-    return error
+    return error;
   }
- 
-}
+};
+export const isObjectEmpty = (objectName) => {
+  return Object.keys(objectName).length === 0;
+};
+export const addPlaint = async (data) => {
+  try {
+    const req = await axiosClient.post("api/complaint/store", data);
+
+    return req;
+  } catch (err) {
+    return err;
+  }
+};

@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { axiosClient } from "../api/axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userActons } from "../store/userSlice";
 
 const ProtectedLayout = () => {
-  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [protectedCase, setProtectedCase] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     if (!window.localStorage.getItem("ACCESS_TOKEN")) {
       navigate("/login");
+      return;
     } else {
-      
-      setProtectedCase(true);
+      if (!user) {
+        setProtectedCase(true);
+      }
     }
   }, []);
   useEffect(() => {
@@ -31,12 +33,11 @@ const ProtectedLayout = () => {
         }
         setLoading(false);
       } catch (error) {
-        console.log("error authentication");
+        console.clear()
       }
     };
-    
-      fetching();
-    
+
+    fetching();
   }, [protectedCase]);
 
   return (

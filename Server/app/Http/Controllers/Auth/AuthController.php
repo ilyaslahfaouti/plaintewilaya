@@ -16,6 +16,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         
+        
         $validator = Validator::make($request->all(), [
             'f_name' => 'required|string|max:255',
             'l_name' => 'required|string|max:255',
@@ -26,7 +27,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return response()->json(['errors' => $validator->errors()], 420);
         }
         $validatedData = $validator->validated();
         
@@ -89,26 +90,17 @@ class AuthController extends Controller
     
     }
     public function logout(Request $request) {
-        /** @var User $user */
         $user = $request->user();
-        try {
-            // Revoke the token that was used to authenticate the current request
             $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
-            return response('', 204);
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error('Error logging out user: ' . $e->getMessage());
-            // Return a generic error message
-            return response()->json(['error' => 'An error occurred while logging out.'], 500);
-        }
+            return response('logout seccess', 204);
     }
 
     public function sendEmailVerification(Request $request){
 
         /** @var User $user */
         $user = $request->user();
-        $user->email_verified = true;
-        dump($user);
+        // $user->email_verified = true;
+        // dump($user);
         
     }
 }
