@@ -62,7 +62,7 @@ const Login = () => {
                   htmlFor="email"
                   className="font-Poppins text-md block mb-2 "
                 >
-                  email
+                  Email:
                 </label>
                 <input
                   required
@@ -84,7 +84,7 @@ const Login = () => {
                   htmlFor="password"
                   className="font-Poppins text-md block mb-2 "
                 >
-                  password
+                  Mot de passe:
                 </label>
                 <input
                   required
@@ -108,7 +108,7 @@ const Login = () => {
                 type="submit"
                 className="bg-blue-600 text-[#ffff] capitalize font-poppins font-medium p-1 px-3 rounded-md text-lg hover:bg-blue-500 transition-all duration-[.2s]"
               >
-                conixion
+                Connexion
               </button>
             </div>
           </form>

@@ -156,7 +156,7 @@ const Plaint = () => {
                     htmlFor="commune"
                     className=" text-md block mb-2 capitalize "
                   >
-                    commune :{" "}
+                    Commune :{" "}
                   </label>
                   <div className="">
                     <select
@@ -191,7 +191,7 @@ const Plaint = () => {
                     htmlFor="date"
                     className=" text-md block mb-2 capitalize "
                   >
-                    date :{" "}
+                    Date :{" "}
                   </label>
                   <div className="">
                     <input
@@ -219,7 +219,7 @@ const Plaint = () => {
                     htmlFor="subject"
                     className=" text-md block mb-2 capitalize "
                   >
-                    sujet :{" "}
+                    Sujet :{" "}
                   </label>
                   <div className="flex relative">
                     <input
@@ -247,7 +247,7 @@ const Plaint = () => {
                     htmlFor="body"
                     className=" text-md block mb-2 capitalize "
                   >
-                    le corp :{" "}
+                    Le corps :{" "}
                   </label>
                   <div className="flex relative">
                     <textarea
@@ -274,7 +274,7 @@ const Plaint = () => {
                     htmlFor="files"
                     className=" text-md block mb-2 capitalize "
                   >
-                    pièces jointes :{" "}
+                    Image :{" "}
                   </label>
                   <div className="flex relative">
                     <input
@@ -299,7 +299,7 @@ const Plaint = () => {
                     type="submit"
                     className="bg-blue-600 text-[#ffff] capitalize font-poppins font-medium p-1 px-3 rounded-md text-lg hover:bg-blue-500 transition-all duration-[.2s]"
                   >
-                    submit
+                    Envoyer
                   </button>
                 </div>
               </form>

@@ -52,7 +52,7 @@ const Header = () => {
                     onClick={attemptLogout}
                     className="bg-slate-400 rounded-md text-slate-50 py-1 px-2"
                   >
-                    logout
+                    Déconnexion
                   </button>
                 </div>
               ) : (

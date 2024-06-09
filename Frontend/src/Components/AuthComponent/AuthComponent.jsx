@@ -20,7 +20,7 @@ const AuthComponent = ({ children, title }) => {
                 <span>
                   vous avez déjà un compte{" "}
                   <Link to={"/login"} className="text-blue-500 underline">
-                    connectez-vous
+                    Connectez-vous
                   </Link>
                 </span>
               ) : title === "login" ? (

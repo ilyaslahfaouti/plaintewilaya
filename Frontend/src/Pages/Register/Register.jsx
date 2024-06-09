@@ -85,7 +85,7 @@ const Register = () => {
                   htmlFor="l_name"
                   className="font-Poppins text-md block mb-2 "
                 >
-                  Nom
+                  Nom:
                 </label>
                 <input
                   required
@@ -107,7 +107,7 @@ const Register = () => {
                   htmlFor="f_name"
                   className="font-Poppins text-md block mb-2 "
                 >
-                  Prenom
+                  Prenom:
                 </label>
                 <input
                   required
@@ -127,7 +127,7 @@ const Register = () => {
                   htmlFor="email"
                   className="font-Poppins text-md block mb-2  "
                 >
-                  email
+                  Email:
                 </label>
                 <input
                   required
@@ -147,7 +147,7 @@ const Register = () => {
                   htmlFor="tel"
                   className="font-Poppins text-md block mb-2 "
                 >
-                  tel
+                  Téléphone:
                 </label>
                 <input
                   required
@@ -168,7 +168,7 @@ const Register = () => {
                   htmlFor="commune"
                   className="font-Poppins text-md block mb-2 "
                 >
-                  commune
+                  Commune:
                 </label>
                 <select
                   onChange={inputChange}
@@ -196,7 +196,7 @@ const Register = () => {
                     htmlFor="password"
                     className="font-Poppins text-md block mb-2 "
                   >
-                    password
+                    Password:
                   </label>
                   <input
                     required
@@ -215,7 +215,7 @@ const Register = () => {
                     htmlFor="password_confirmation"
                     className="font-Poppins text-md block mb-2 "
                   >
-                    confirmation password
+                    Confirmation password:
                   </label>
                   <input
                     required
@@ -236,7 +236,7 @@ const Register = () => {
                 type="submit"
                 className="bg-blue-600 text-[#ffff] capitalize font-poppins font-medium p-1 px-3 rounded-md text-lg hover:bg-blue-500 transition-all duration-[.2s]"
               >
-                s'inscrire
+                S'inscrire
               </button>
             </div>
           </form>
