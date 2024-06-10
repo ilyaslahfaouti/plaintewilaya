@@ -27,7 +27,7 @@ const AuthComponent = ({ children, title }) => {
                 <span>
                   vous n'avez pas de compte{" "}
                   <Link to={"/register"} className="text-blue-500 underline">
-                    s'inscrire
+                    S'inscrire
                   </Link>
                 </span>
               ) : (

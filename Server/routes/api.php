@@ -21,6 +21,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/emailVerify',[AuthController::class,'sendEmailVerification'])->middleware('auth:sanctum');
 Route::post('/complaint/store', [ComplaintController::class,'store'])->middleware('auth:sanctum');
+Route::get('/plaints',[ComplaintController::class,'index']);
+Route::get('/user/plaints',[ComplaintController::class,'specific'])->middleware('auth:sanctum');
 
 Route::post('/test',function (Request $request){
     if($request->hasFile('img')){

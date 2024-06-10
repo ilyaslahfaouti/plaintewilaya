@@ -74,3 +74,12 @@ export const addPlaint = async (data) => {
     return err;
   }
 };
+
+export const getPlaints = async () => {
+  try {
+    const req = await axiosClient.get("api/user/plaints");
+    return req;
+  } catch (error) {
+    return error;
+  }
+};

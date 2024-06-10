@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plainte;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -11,7 +12,18 @@ class ComplaintController extends Controller
 {
     public function index(){
         $complaints = Plainte::all();
-        return 'all plaint route';
+        return response()->json([
+            'plaints'=>$complaints,
+        ]);
+    }
+    public function specific(Request $request){
+
+        $user = $request->user();
+        if ($user) {
+            $complaints = $user->plaints;
+            return response()->json($complaints);
+        }
+        return response()->json(['error' => ['message'=>"User not found"]], 404);
     }
 
     public function store(Request $request){

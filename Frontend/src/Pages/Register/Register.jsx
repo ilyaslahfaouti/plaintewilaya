@@ -58,7 +58,7 @@ const Register = () => {
         const response = await signup(formData);
 
         if (response.status === 201) {
-          window.loclStoragae.setItem("ACCESS_TOKEN", response.data.token);
+          window.localStorage.setItem("ACCESS_TOKEN", response.data.token);
           navigate("/verification");
 
           return "";
@@ -196,7 +196,7 @@ const Register = () => {
                     htmlFor="password"
                     className="font-Poppins text-md block mb-2 "
                   >
-                    Password:
+                    Mot de passe:
                   </label>
                   <input
                     required
@@ -215,7 +215,7 @@ const Register = () => {
                     htmlFor="password_confirmation"
                     className="font-Poppins text-md block mb-2 "
                   >
-                    Confirmation password:
+                    Confirmation Mot de passe:
                   </label>
                   <input
                     required

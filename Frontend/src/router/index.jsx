@@ -6,8 +6,9 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import Dashbord from "../Pages/Dashbord/Dashbord";
 import NotFound from "../Pages/NotFound/NotFound";
-import EmailVerification from '../Pages/EmailVerification/EmailVerification'
-import Plaint from "../Pages/Plaint/Plaint";
+import EmailVerification from "../Pages/EmailVerification/EmailVerification";
+import PlaintForm from "../Pages/PlaintForm/PlaintForm";
+import Plaints from "../Pages/Plaints/Plaints";
 import SeccessPlaint from "../Pages/SeccessPlaint/SeccessPlaint";
 
 export const router = createBrowserRouter([
@@ -26,13 +27,11 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
-      
-      
     ],
   },
   {
     element: <ProtectedLayout />,
-    children:[
+    children: [
       {
         path: "/verification",
         element: <EmailVerification />,
@@ -42,15 +41,18 @@ export const router = createBrowserRouter([
         element: <Dashbord />,
       },
       {
-        path: "/plaint",
-        element: <Plaint />,
+        path: "/plaint/create",
+        element: <PlaintForm />,
       },
       {
         path: "/seccess",
         element: <SeccessPlaint />,
       },
-    ]
-
+      {
+        path: "/plaints",
+        element: <Plaints />,
+      },
+    ],
   },
 
   {

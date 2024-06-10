@@ -1,4 +1,4 @@
-import "./Plaint.css";
+import "./PlaintForm.css";
 import React, { useEffect, useState } from "react";
 import Header from "../../Components/Header/Header";
 import AuthComponent from "../../Components/AuthComponent/AuthComponent";
@@ -11,7 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import SeccessPlaint from "../SeccessPlaint/SeccessPlaint";
 
-const Plaint = () => {
+const PlaintForm = () => {
   const navigate = useNavigate();
   const [communes, setCommunes] = useState([]);
   const [formData, setFormData] = useState({
@@ -46,15 +46,6 @@ const Plaint = () => {
       if (img) {
         data["img"] = img;
       }
-
-      // const fd = new FormData(); // make object of the complaint Form Data
-      // fd.append("commune", formData.commune);
-      // fd.append("date", formData.date);
-      // fd.append("subject", formData.subject);
-      // fd.append("body", formData.body);
-      // if (img) {
-      //   fd.append("img", img);
-      // }
 
       const res = await addPlaint(data);
       if (res.status === 201) {
@@ -122,34 +113,6 @@ const Plaint = () => {
             <hr className="my-4" />
             <div className="form mt-[3rem]">
               <form onSubmit={plaintSubmit} className="flex flex-col gap-10 ">
-                {/* status field */}
-                {/* <div className="flex justify-center items-start gap-3">
-                  <label
-                    htmlFor="status"
-                    className=" text-md block mb-2 capitalize "
-                  >
-                    type :{" "}
-                  </label>
-                  <div className="flex relative">
-                    <select
-                      required
-                      onChange={inputChange}
-                      value={formData["status"]}
-                      name="status"
-                      id="status"
-                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 min-w-[40rem]"
-                    >
-                      <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                    </select>
-
-                    <span className="text-sm  text-red-600 pl-[6px] absolute right-0 translate-x-[100%]">
-                      {errs["status"] ? errs["status"] : ""}
-                    </span>
-                  </div>
-                </div> */}
                 {/* commune field */}
                 <div className="flex justify-center items-start gap-3">
                   <label
@@ -311,4 +274,4 @@ const Plaint = () => {
   );
 };
 
-export default Plaint;
+export default PlaintForm;

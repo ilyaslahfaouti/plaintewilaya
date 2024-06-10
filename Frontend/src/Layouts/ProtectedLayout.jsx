@@ -33,7 +33,7 @@ const ProtectedLayout = () => {
         }
         setLoading(false);
       } catch (error) {
-        console.clear()
+        console.log("Unauthorized");
       }
     };
 
