@@ -15,16 +15,21 @@ class Plainte extends Model
 
     protected $fillable = [
         'user_id',
-        'commune',
         'subject',
         'body',
         'date',
         'img',
+        'status_id',
+        'auth_session_id',
 
     ];
 
-    protected function user(){
-        return $this->belongsTo(User::class);
+    protected function session(){
+        return $this->belongsTo(AuthSession::class);
     }
 
+    public function status()
+    {
+        return $this->belongsTo(PlaintStatus::class);
+    }
 }

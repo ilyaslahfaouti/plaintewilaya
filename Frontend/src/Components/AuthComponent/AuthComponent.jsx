@@ -6,16 +6,16 @@ const AuthComponent = ({ children, title }) => {
     <>
       <section className=" z-[-1]  my-10   flex justify-center items-center">
         <div className="container  flex justify-center">
-          <div className="form-holder bg-[#ffffff] rounded-md px-[3rem] pb-10 mx-[4rem] relative w-[100%]">
+          <div className="form-holder bg-[#ffffff] rounded-md p-5 sm:p-10  relative w-[100%]">
             {title ? (
-              <div className="title text-5xl  font-bold font-Poppins py-9 capitalize">
+              <div className="title text-l md:text-5xl  font-bold font-Poppins py-9 capitalize">
                 <h2>{title}</h2>
               </div>
             ) : (
               ""
             )}
-            <div className="py-15 pt-32">{children}</div>
-            <div className="absolute bottom-[-30px] right-0 font-Poppins ">
+            <div className="">{children}</div>
+            <div className="absolute bottom-[-30px] right-0 font-Poppins text-sm md:text-md">
               {title === "register" ? (
                 <span>
                   vous avez déjà un compte{" "}

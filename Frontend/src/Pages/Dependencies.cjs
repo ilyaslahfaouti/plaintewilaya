@@ -1,3 +1,4 @@
+import axios from "axios";
 import { axiosClient } from "../api/axios";
 
 export const getCommunes = async () => {
@@ -33,7 +34,7 @@ export const validate = (data) => {
 const getCsrf = async () => await axiosClient.get("/sanctum/csrf-cookie"); //you can use it after in each of signup and loginin functions
 
 export const signup = async (data) => {
-  // const csrf = await axiosClient.get("/sanctum/csrf-cookie");
+  const csrf = await axiosClient.get("/sanctum/csrf-cookie");
   try {
     const res = await axiosClient.post("/api/register", data);
 
@@ -45,8 +46,10 @@ export const signup = async (data) => {
 
 export const loginin = async (data) => {
   const csrf = await axiosClient.get("/sanctum/csrf-cookie");
+
   try {
     const res = await axiosClient.post("/api/login", data);
+
     return res;
   } catch (error) {
     return error;
@@ -57,7 +60,6 @@ export const emailVerify = async () => {
   try {
     const user = await axiosClient.get("/api/user");
     const res = await axiosClient.post("/emailVerify", user.data);
-    console.log(res);
   } catch (error) {
     return error;
   }
@@ -67,8 +69,7 @@ export const isObjectEmpty = (objectName) => {
 };
 export const addPlaint = async (data) => {
   try {
-    const req = await axiosClient.post("api/complaint/store", data);
-
+    const req = await axiosClient.post("/api/complaint/store", data);
     return req;
   } catch (err) {
     return err;
@@ -77,7 +78,15 @@ export const addPlaint = async (data) => {
 
 export const getPlaints = async () => {
   try {
-    const req = await axiosClient.get("api/user/plaints");
+    const req = await axiosClient.get("/api/user/plaints");
+    return req;
+  } catch (error) {
+    return error;
+  }
+};
+export const getPlaint = async (id) => {
+  try {
+    const req = await axiosClient.get(`/api/plaint/show/${id}`);
     return req;
   } catch (error) {
     return error;

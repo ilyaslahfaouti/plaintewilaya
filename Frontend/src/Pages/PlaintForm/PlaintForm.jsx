@@ -9,54 +9,45 @@ import {
   getCommunes,
 } from "../Dependencies.cjs";
 import { useNavigate } from "react-router-dom";
-import SeccessPlaint from "../SeccessPlaint/SeccessPlaint";
 
 const PlaintForm = () => {
   const navigate = useNavigate();
-  const [communes, setCommunes] = useState([]);
+  const [isDisable, setIsDisable] = useState(false);
   const [formData, setFormData] = useState({
-    // status: "",
     date: "",
     subject: "",
     body: "",
-    commune: "",
   });
-  const [errs, setErrs] = useState({});
   const [img, setImg] = useState("");
-
-  useEffect(() => {
-    const response = async () => {
-      const data = await getCommunes();
-      setCommunes([...data]);
-    };
-    response();
-  }, []);
+  const [errs, setErrs] = useState({});
 
   const plaintSubmit = async (e) => {
     e.preventDefault();
-
+    setIsDisable(true);
     const validated = validate({ ...formData });
 
     if (!validated.valid) {
       setErrs({ ...validated.errors });
-
-      return false;
     } else {
-      let data = { ...formData };
+      const data = new FormData();
+      data.append("date", formData.date);
+      data.append("subject", formData.subject);
+      data.append("body", formData.body);
       if (img) {
-        data["img"] = img;
+        data.append("img", img);
       }
 
       const res = await addPlaint(data);
       if (res.status === 201) {
         navigate("/seccess", { state: { ...res.data.complaint } });
-        return;
       } else {
         if (res.response.data.errors) {
           setErrs({ ...res.response.data.errors });
         }
       }
     }
+
+    setIsDisable(false);
   };
   const imageChange = (e) => {
     setImg(e.target.files[0]);
@@ -73,12 +64,13 @@ const PlaintForm = () => {
       [name]: val,
     });
   };
+
   return (
     <>
       <Header />
       <AuthComponent
         title={
-          <div className="title text-center font-Poppins text-2xl font-semibold uppercase mb-7">
+          <div className="title text-center font-Poppins text-l md:text-2xl font-semibold uppercase mb-7">
             <h3>
               Département concerné :<br /> Préfecture d'Agadir Ida-Outanane
             </h3>
@@ -86,13 +78,13 @@ const PlaintForm = () => {
         }
       >
         <div className="font-Poppins">
-          <div className="attention text-[#D94040] bg-[#FCEAE9] p-2 rounded-md max-w-[80%] ">
+          <div className="text-[#D94040] bg-[#FCEAE9] p-2 rounded-md max-w-full md:max-w-[80%] ">
             <h3 className="uppercase text-md font-medium ms-3">attention</h3>
-            <p className="text-sm">
+            <p className="text-xs md:text-sm">
               Nous attirons votre attention sur le fait que vos plaintes ne
               seront pas traitées dans les cas suivants :
             </p>
-            <ul className="list-disc list-inside text-sm">
+            <ul className="list-disc list-inside text-xs md:text-sm">
               <li>
                 Si l'objet est devant le pouvoir judiciaire ou si un jugement
                 est rendu en possession de la force de la chose jugée.
@@ -112,44 +104,9 @@ const PlaintForm = () => {
             </h3>
             <hr className="my-4" />
             <div className="form mt-[3rem]">
-              <form onSubmit={plaintSubmit} className="flex flex-col gap-10 ">
-                {/* commune field */}
-                <div className="flex justify-center items-start gap-3">
-                  <label
-                    htmlFor="commune"
-                    className=" text-md block mb-2 capitalize "
-                  >
-                    Commune :{" "}
-                  </label>
-                  <div className="">
-                    <select
-                      required
-                      onChange={inputChange}
-                      value={formData["commune"]}
-                      name="commune"
-                      id="commune"
-                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 min-w-[40rem]"
-                    >
-                      <option></option>
-                      {communes.map((item, key) => (
-                        <option key={key} value={item.id}>
-                          {item.nom_fr}
-                        </option>
-                      ))}
-                    </select>
-
-                    {errs["commune"] ? (
-                      <span className="text-sm  text-red-600 pl-[6px] mt-[6px] block">
-                        {errs["commune"]}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-
+              <form onSubmit={plaintSubmit} className="flex flex-col gap-5 ">
                 {/* date field */}
-                <div className="flex justify-center items-start gap-3">
+                <div className="flex  flex-col lg:flex-row justify-center  gap-0 lg:gap-3">
                   <label
                     htmlFor="date"
                     className=" text-md block mb-2 capitalize "
@@ -164,7 +121,7 @@ const PlaintForm = () => {
                       type="date"
                       name="date"
                       id="date"
-                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 min-w-[40rem]"
+                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300  md:w-[40rem]"
                     />
 
                     {errs["date"] ? (
@@ -177,7 +134,7 @@ const PlaintForm = () => {
                   </div>
                 </div>
                 {/* sujet field */}
-                <div className="flex justify-center items-start gap-3">
+                <div className="flex  flex-col lg:flex-row justify-center  gap-0 lg:gap-3">
                   <label
                     htmlFor="subject"
                     className=" text-md block mb-2 capitalize "
@@ -192,7 +149,7 @@ const PlaintForm = () => {
                       type="text"
                       name="subject"
                       id="subject"
-                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 min-w-[40rem]"
+                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 w-full  md:w-[40rem] "
                     />
 
                     {errs["subject"] ? (
@@ -205,7 +162,7 @@ const PlaintForm = () => {
                   </div>
                 </div>
                 {/* body field */}
-                <div className="flex justify-center items-start gap-3">
+                <div className="flex  flex-col lg:flex-row justify-center  gap-0 lg:gap-3">
                   <label
                     htmlFor="body"
                     className=" text-md block mb-2 capitalize "
@@ -219,7 +176,7 @@ const PlaintForm = () => {
                       value={formData["body"]}
                       name="body"
                       id="body"
-                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 min-w-[40rem] min-h-[10rem]"
+                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 w-full  md:w-[40rem]  min-h-[10rem]"
                     ></textarea>
 
                     {errs["body"] ? (
@@ -232,7 +189,7 @@ const PlaintForm = () => {
                   </div>
                 </div>
                 {/* files field */}
-                <div className="flex justify-center items-start gap-3">
+                <div className="flex  flex-col lg:flex-row justify-center gap-0 lg:gap-3">
                   <label
                     htmlFor="files"
                     className=" text-md block mb-2 capitalize "
@@ -245,7 +202,7 @@ const PlaintForm = () => {
                       type="file"
                       name="files"
                       id="files"
-                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 min-w-[40rem] "
+                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 w-full  md:w-[40rem]  "
                     />
 
                     {errs["img"] ? (
@@ -259,8 +216,9 @@ const PlaintForm = () => {
                 </div>
                 <div className="btn flex justify-end">
                   <button
+                    disabled={isDisable}
                     type="submit"
-                    className="bg-blue-600 text-[#ffff] capitalize font-poppins font-medium p-1 px-3 rounded-md text-lg hover:bg-blue-500 transition-all duration-[.2s]"
+                    className="bg-blue-600 text-[#ffff] capitalize font-poppins font-medium p-1 px-3 rounded-md text-lg hover:bg-blue-500 transition-all duration-[.2s] disabled:bg-black"
                   >
                     Envoyer
                   </button>

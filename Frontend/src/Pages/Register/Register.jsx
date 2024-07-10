@@ -79,8 +79,9 @@ const Register = () => {
       <AuthComponent title="register">
         <div className="form ">
           <form action="" onSubmit={handelSubmit}>
-            <div action="" className="grid grid-cols-2 ">
-              <div className="pl-3 mb-3 ">
+            <div action="" className="flex flex-col md:grid md:grid-cols-2">
+              {/* field */}
+              <div className=" p-2">
                 <label
                   htmlFor="l_name"
                   className="font-Poppins text-md block mb-2 "
@@ -102,7 +103,8 @@ const Register = () => {
                   <span>{errs["l_name"]}</span>
                 </div>
               </div>
-              <div className="pl-3 mb-3">
+              {/* field */}
+              <div className=" p-2">
                 <label
                   htmlFor="f_name"
                   className="font-Poppins text-md block mb-2 "
@@ -122,7 +124,8 @@ const Register = () => {
                   <span>{errs["f_name"]}</span>
                 </div>
               </div>
-              <div className="pl-3 mb-3">
+              {/* field */}
+              <div className=" p-2">
                 <label
                   htmlFor="email"
                   className="font-Poppins text-md block mb-2  "
@@ -136,13 +139,14 @@ const Register = () => {
                   type="text"
                   name="email"
                   id="email"
-                  className="w-2/3 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
+                  className="w-full sm:w-2/3 md:w-5/6  lg:w-1/2 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
                 />
                 <div className="error text-sm  text-red-600 pl-[6px]">
                   <span>{errs["email"]}</span>
                 </div>
               </div>
-              <div className="pl-3 mb-3">
+              {/* field */}
+              <div className=" p-2">
                 <label
                   htmlFor="tel"
                   className="font-Poppins text-md block mb-2 "
@@ -156,14 +160,14 @@ const Register = () => {
                   type="text"
                   name="tel"
                   id="tel"
-                  className="w-1/2 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
+                  className="w-full sm:w-2/3 md:w-5/6 lg:w-1/2 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
                 />
                 <div className="error text-sm  text-red-600 pl-[6px]">
                   <span>{errs["tel"]}</span>
                 </div>
               </div>
-
-              <div className="pl-3 mb-3">
+              {/* field */}
+              <div className=" p-2">
                 <label
                   htmlFor="commune"
                   className="font-Poppins text-md block mb-2 "
@@ -189,9 +193,9 @@ const Register = () => {
                   <span>{errs["commune"]}</span>
                 </div>
               </div>
-
-              <div className="grid col-span-2 grid-cols-2">
-                <div className="pl-3 mb-3 ">
+              {/* field */}
+              <div className="flex flex-col md:grid md:col-span-2 md:grid-cols-2">
+                <div className=" p-2 ">
                   <label
                     htmlFor="password"
                     className="font-Poppins text-md block mb-2 "
@@ -204,13 +208,13 @@ const Register = () => {
                     type="password"
                     name="password"
                     id="password"
-                    className="w-1/2 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
+                    className="w-full sm:w-2/3 md:w-5/6 lg:w-1/2 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
                   />
                   <div className="error text-sm  text-red-600 pl-[6px]">
                     <span>{errs["password"]}</span>
                   </div>
                 </div>
-                <div className="pl-3 mb-3">
+                <div className="p-2">
                   <label
                     htmlFor="password_confirmation"
                     className="font-Poppins text-md block mb-2 "
@@ -223,7 +227,7 @@ const Register = () => {
                     type="password"
                     name="password_confirmation"
                     id="password_confirmation"
-                    className="w-1/2 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
+                    className="w-full sm:w-2/3 md:w-5/6 lg:w-1/2 transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
                   />
                   <div className="error text-sm  text-red-600 pl-[6px]">
                     <span>{errs["password_confirmation"]}</span>

@@ -5,14 +5,17 @@ import PlaintCard from "../../Components/PlaintCard/PlaintCard";
 import { getPlaints } from "../Dependencies.cjs";
 
 const Plaints = () => {
-  const [plaint, setPlaint] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [plaintes, setPlaintes] = useState([]);
   const [error, setError] = useState("no Data Found");
   useEffect(() => {
     const makeRequest = async () => {
-      const req = await getPlaints();
-      setPlaint(req.data);
+      const req = await getPlaints().then((res) => {
+        setPlaintes([...res.data]);
+      });
     };
     makeRequest();
+    setLoading(false);
   }, []);
 
   return (
@@ -20,7 +23,11 @@ const Plaints = () => {
       <Header />
       <AuthComponent title={"les plaintes"}>
         <div className="container ">
-          {plaint ? <PlaintCard data={plaint} /> : error}
+          {loading
+            ? "loading"
+            : plaintes.length > 0
+            ? plaintes.map((item, key) => <PlaintCard data={item} key={key} />)
+            : error}
         </div>
       </AuthComponent>
     </>

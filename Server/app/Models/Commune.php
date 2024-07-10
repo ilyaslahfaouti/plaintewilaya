@@ -16,4 +16,7 @@ class Commune extends Model
         'nom_ar',
         'nom_fr',
     ];
+    protected function users(){
+        return $this->hasMany(User::class);
+    }
 }

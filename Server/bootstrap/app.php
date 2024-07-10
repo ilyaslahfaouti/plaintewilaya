@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         // $middleware->append(\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
         // $middleware->append('throttle:api');
-        // $middleware->append(\Illuminate\Routing\Middleware\SubstituteBindings::class);
+        $middleware->append(\Illuminate\Session\Middleware\StartSession::class);
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {

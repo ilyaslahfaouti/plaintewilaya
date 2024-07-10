@@ -10,53 +10,28 @@ import EmailVerification from "../Pages/EmailVerification/EmailVerification";
 import PlaintForm from "../Pages/PlaintForm/PlaintForm";
 import Plaints from "../Pages/Plaints/Plaints";
 import SeccessPlaint from "../Pages/SeccessPlaint/SeccessPlaint";
+import PlaintDetails from "../Pages/PlaintDetails/PlaintDetails";
 
 export const router = createBrowserRouter([
   {
     element: <GeussLayaout />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
+      { path: "/", element: <Home /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
     ],
   },
   {
     element: <ProtectedLayout />,
     children: [
-      {
-        path: "/verification",
-        element: <EmailVerification />,
-      },
-      {
-        path: "/dashbord",
-        element: <Dashbord />,
-      },
-      {
-        path: "/plaint/create",
-        element: <PlaintForm />,
-      },
-      {
-        path: "/seccess",
-        element: <SeccessPlaint />,
-      },
-      {
-        path: "/plaints",
-        element: <Plaints />,
-      },
+      { path: "/verification", element: <EmailVerification /> },
+      { path: "/dashbord", element: <Dashbord /> },
+      { path: "/plaint/create", element: <PlaintForm /> },
+      { path: "/seccess", element: <SeccessPlaint /> },
+      { path: "/plaints", element: <Plaints /> },
+      { path: "/plaint/detail", element: <PlaintDetails /> },
     ],
   },
 
-  {
-    path: "/*",
-    element: <NotFound />,
-  },
+  { path: "/*", element: <NotFound /> },
 ]);

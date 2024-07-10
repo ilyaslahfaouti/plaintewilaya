@@ -7,66 +7,71 @@ import { Link } from "react-router-dom";
 import { getPlaints, isObjectEmpty } from "../Dependencies.cjs";
 
 const Dashbord = () => {
-  const [plaint, setPlaint] = useState({});
+  const [plaintes, setPlaintes] = useState([]);
   const [hasComplaint, setHasComplaint] = useState(false);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const makeRequest = async () => {
-      const req = await getPlaints();
-
-      if (!isObjectEmpty(req.data)) {
-        setPlaint(req.data);
-        setHasComplaint(true);
-      } else {
-        console.log("empty");
-        setHasComplaint(false);
-      }
-      setLoading(false);
-    };
-    makeRequest();
-  }, []);
+  // const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   const makeRequest = async () => {
+  //     const req = await getPlaints();
+  //     console.log(req);
+  //     debugger;
+  //     if (!isObjectEmpty(req.data)) {
+  //       setPlaintes([...req.data]);
+  //       setHasComplaint(true);
+  //     } else {
+  //       setHasComplaint(false);
+  //     }
+  //     setLoading(false);
+  //   };
+  //   makeRequest();
+  // }, []);
 
   return (
     <>
       <Header />
-      {loading ? (
+      {/* {loading ? (
         <div className="flex justify-center items-center uppercase font-Poppins ">
           {" "}
           loading
         </div>
-      ) : (
+      ) : ( */}
         <AuthComponent>
           <div className="content flex justify-around">
-            {hasComplaint ? (
-              <div className="item p-5">
-                <Link to={"/plaints"}>
-                  <div className="hover:scale-[1.1] transition-all duration-[.3s]">
-                    <div className="box border border-solid border-black rounded-md p-1 mb-4">
-                      <img className="max-w-[200px]" src={Progress} alt="" />
-                    </div>
-                    <div className="boxfooter font-Poppins capitalize text-center text-xl">
-                      suivi une plainte
-                    </div>
+            <div className="item p-5">
+              <Link to={"/plaints"}>
+                <div className="hover:scale-[1.1] transition-all duration-[.3s]">
+                  <div className="box border border-solid border-black rounded-md p-1 mb-4">
+                    <img
+                      className="max-w-[150px] md:max-w-[200px]"
+                      src={Progress}
+                      alt=""
+                    />
                   </div>
-                </Link>
-              </div>
-            ) : (
-              <div className="item p-5">
-                <Link to={"/plaint/create"}>
-                  <div className="hover:scale-[1.1] transition-all duration-[.3s]">
-                    <div className="box border border-solid border-black rounded-md p-1 mb-4 ">
-                      <img className="max-w-[200px]" src={Create} alt="" />
-                    </div>
-                    <div className="boxfooter font-Poppins capitalize text-center text-xl">
-                      <p>créer une plainte</p>
-                    </div>
+                  <div className="boxfooter font-Poppins capitalize text-center text-l md:text-xl">
+                    suivi une plainte
                   </div>
-                </Link>
-              </div>
-            )}
+                </div>
+              </Link>
+            </div>
+            <div className="item p-5">
+              <Link to={"/plaint/create"}>
+                <div className="hover:scale-[1.1] transition-all duration-[.3s]">
+                  <div className="box border border-solid border-black rounded-md p-1 mb-4 ">
+                    <img
+                      className="max-w-[150px] md:max-w-[200px]"
+                      src={Create}
+                      alt=""
+                    />
+                  </div>
+                  <div className="boxfooter font-Poppins capitalize text-center text-l md:text-xl">
+                    <p>créer une plainte</p>
+                  </div>
+                </div>
+              </Link>
+            </div>
           </div>
         </AuthComponent>
-      )}
+      {/* )} */}
     </>
   );
 };

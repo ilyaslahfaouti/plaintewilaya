@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('plaintes', function (Blueprint $table) {
-            $table->unsignedBigInteger('commune')->nullable()->after('user_id');
-            $table->foreign('commune')->references('id')->on('communes');
+            
+            $table->unsignedBigInteger('auth_session_id')->nullable()->after('id');
+            $table->foreign('auth_session_id')->references('id')->on('auth_sessions');
         });
     }
 
@@ -23,9 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('plaintes', function (Blueprint $table) {
-            
-                $table->dropColumn('commune');
-            
+           $table->dropColumn('auth_session_id');
         });
     }
 };

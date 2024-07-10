@@ -52,7 +52,10 @@ class User extends Authenticatable
         ];
     }
 
-    protected function plaints() {
-        return $this->hasOne(Plainte::class);
+    protected function sessions() {
+        return $this->hasMany(AuthSession::class);
+    }
+    protected function commune(){
+        return $this->belongsTo(Commune::class);
     }
 }

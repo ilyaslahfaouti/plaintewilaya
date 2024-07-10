@@ -3,6 +3,7 @@ import Header from "../../Components/Header/Header";
 import AuthComponent from "../../Components/AuthComponent/AuthComponent";
 import { validate, loginin } from "../Dependencies.cjs";
 import { useNavigate } from "react-router-dom";
+import { axiosClient } from "../../api/axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,12 +17,15 @@ const Login = () => {
     e.preventDefault();
 
     const validated = validate(formData);
+
     if (!validated.valid) {
       setErrs({ ...validated.errors });
     } else {
       setErrs({});
+
       try {
         const res = await loginin(formData);
+        
 
         if (res.status === 201) {
           window.localStorage.setItem("ACCESS_TOKEN", res.data.token);
@@ -39,6 +43,7 @@ const Login = () => {
           });
         }
       } catch (error) {
+        console.log("errrrrrrrrr");
         console.log("catched: ", error);
       }
     }
@@ -54,13 +59,13 @@ const Login = () => {
     <>
       <Header />
       <AuthComponent title={"login"}>
-        <div className="form flex justify-center">
-          <form onSubmit={onSubmit} action="">
-            <div>
+        <div className="form sm:flex justify-center w-[100%] sm:w-auto sm:m-16 ">
+          <form onSubmit={onSubmit} action="" className="">
+            <div className="">
               <div className="pl-3 mb-3 ">
                 <label
                   htmlFor="email"
-                  className="font-Poppins text-md block mb-2 "
+                  className="font-Poppins  text-md  block mb-2 "
                 >
                   Email:
                 </label>
@@ -72,7 +77,7 @@ const Login = () => {
                   name="email"
                   id="email"
                   className={
-                    "min-w-[22rem] transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 $ "
+                    " w-[100%] sm:min-w-[22rem]  transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md sm:px-3 py-[2px] border border-gray-300 $ "
                   }
                 />
                 <div className="error text-sm  text-red-600 pl-[6px]">
@@ -93,7 +98,7 @@ const Login = () => {
                   name="password"
                   id="password"
                   className={
-                    "min-w-[22rem] transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 $ "
+                    " w-[100%] sm:min-w-[22rem]  transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 $ "
                   }
                 />
                 <div className="error text-sm  text-red-600 pl-[6px]">
@@ -106,7 +111,7 @@ const Login = () => {
             <div className="flex justify-end mt-10">
               <button
                 type="submit"
-                className="bg-blue-600 text-[#ffff] capitalize font-poppins font-medium p-1 px-3 rounded-md text-lg hover:bg-blue-500 transition-all duration-[.2s]"
+                className="bg-blue-600 text-[#ffff] capitalize font-poppins font-medium p-1 px-3 rounded-md text-sm sm:text-lg  hover:bg-blue-500 transition-all duration-[.2s]"
               >
                 Connexion
               </button>
