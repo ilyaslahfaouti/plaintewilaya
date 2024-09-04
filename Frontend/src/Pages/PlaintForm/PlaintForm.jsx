@@ -9,30 +9,45 @@ import {
   getCommunes,
 } from "../Dependencies.cjs";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const PlaintForm = () => {
   const navigate = useNavigate();
   const [isDisable, setIsDisable] = useState(false);
+  const [communes, setCommunes] = useState([]);
   const [formData, setFormData] = useState({
+    commune:"",
     date: "",
     subject: "",
     body: "",
   });
   const [img, setImg] = useState("");
   const [errs, setErrs] = useState({});
+  const auth_session_id = useSelector(state => state.user.session_id)
+  
+  useEffect(() => {
+    
+    const response = async () => {
+      const data = await getCommunes();
+      setCommunes([...data]);
+    };
+    response();
+  }, []);
 
   const plaintSubmit = async (e) => {
     e.preventDefault();
     setIsDisable(true);
     const validated = validate({ ...formData });
-
+    
     if (!validated.valid) {
       setErrs({ ...validated.errors });
     } else {
       const data = new FormData();
       data.append("date", formData.date);
       data.append("subject", formData.subject);
+      data.append("commune", formData.commune);
       data.append("body", formData.body);
+      data.append("auth_session_id",auth_session_id);
       if (img) {
         data.append("img", img);
       }
@@ -105,6 +120,41 @@ const PlaintForm = () => {
             <hr className="my-4" />
             <div className="form mt-[3rem]">
               <form onSubmit={plaintSubmit} className="flex flex-col gap-5 ">
+                {/* commune field */}
+                <div className="flex  flex-col lg:flex-row justify-center  gap-0 lg:gap-3">
+                  <label
+                    htmlFor="commune"
+                    className=" text-md block mb-2 capitalize "
+                  >
+                    commune :{" "}
+                  </label>
+                  <div className="">
+                    <select
+                      onChange={inputChange}
+                      type="text"
+                      name="commune"
+                      id="commune"
+                      className=" transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 "
+                      required
+                    >
+                      <option value=""></option>
+
+                      {communes.map((item, key) => (
+                        <option key={key} value={item.id}>
+                          {item.nom_fr} - {item.nom_ar}
+                        </option>
+                      ))}
+                    </select>
+
+                    {errs["date"] ? (
+                      <span className="text-sm  text-red-600 pl-[6px] mt-[6px] block">
+                        {errs["commune"]}
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
                 {/* date field */}
                 <div className="flex  flex-col lg:flex-row justify-center  gap-0 lg:gap-3">
                   <label

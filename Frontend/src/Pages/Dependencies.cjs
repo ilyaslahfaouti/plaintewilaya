@@ -49,33 +49,39 @@ export const loginin = async (data) => {
 
   try {
     const res = await axiosClient.post("/api/login", data);
-
     return res;
   } catch (error) {
     return error;
   }
 };
 
+//  Email Verification
 export const emailVerify = async () => {
   try {
-    const user = await axiosClient.get("/api/user");
-    const res = await axiosClient.post("/emailVerify", user.data);
+    const res = await axiosClient.post("api/emailVerify");
+    console.log(res)
+    return res;
   } catch (error) {
+    console.log(error)
     return error;
   }
 };
+
 export const isObjectEmpty = (objectName) => {
   return Object.keys(objectName).length === 0;
 };
+//  Add New Complaint
 export const addPlaint = async (data) => {
   try {
     const req = await axiosClient.post("/api/complaint/store", data);
     return req;
   } catch (err) {
+    console.log(err);
     return err;
   }
 };
 
+// Get All Complaints
 export const getPlaints = async () => {
   try {
     const req = await axiosClient.get("/api/user/plaints");
@@ -84,6 +90,8 @@ export const getPlaints = async () => {
     return error;
   }
 };
+
+// Get Single Complaint
 export const getPlaint = async (id) => {
   try {
     const req = await axiosClient.get(`/api/plaint/show/${id}`);
@@ -92,3 +100,12 @@ export const getPlaint = async (id) => {
     return error;
   }
 };
+
+export const ipAuthorization = async (id)=>{
+  try {
+   const res = await axiosClient.get(`/api/session/${id}/ipAuthorization`);
+    return res
+  } catch (error) {
+    console.log(error)
+  }
+}

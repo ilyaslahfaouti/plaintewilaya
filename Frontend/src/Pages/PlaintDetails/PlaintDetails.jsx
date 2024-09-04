@@ -27,7 +27,7 @@ const PlaintDetails = () => {
             {plainte.img && (
               <div className="px-6 py-4 flex justify-center ">
                 <img
-                  className="w-[80%]   object-cover"
+                  className="w-[80%] md:w-[50%]  object-cover"
                   src={`http://localhost:8000/storage/${plainte.img}`}
                   alt="plainte"
                 />

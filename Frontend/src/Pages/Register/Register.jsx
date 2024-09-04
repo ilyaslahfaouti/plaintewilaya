@@ -39,7 +39,7 @@ const Register = () => {
     ) {
       if (e.target.value !== formData.password) {
         errs["password_confirmation"] =
-          "the confirmation password not match the given password";
+          "Le mot de passe de confirmation ne correspond pas au mot de passe indiqué";
       } else {
         errs["password_confirmation"] = "";
       }

@@ -25,8 +25,8 @@ const ProtectedLayout = () => {
     const fetching = async () => {
       try {
         const res = await axiosClient.get("/api/user");
-        dispatch(userActons.saveUser(res.data));
-        if (!res.data.email_verified) {
+        dispatch(userActons.updateUser(res.data));
+        if (!res.data.email_verified_at) {
           navigate("/verification");
         } else {
           navigate("/dashbord");
@@ -35,6 +35,7 @@ const ProtectedLayout = () => {
       } catch (error) {
         console.log("Unauthorized");
       }
+      
     };
 
     fetching();
@@ -43,7 +44,7 @@ const ProtectedLayout = () => {
   return (
     <>
       {loading ? (
-        "...loading"
+        ""
       ) : (
         <main>
           <Outlet />

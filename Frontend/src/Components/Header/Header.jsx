@@ -65,15 +65,7 @@ const Header = () => {
               ) : (
                 ""
               )}
-              <select
-                id="language-select"
-                className="bg-slate-100 text-xs md:text-md "
-                onChange={switchLang}
-              >
-                <option value="fr">fr</option>
-                <option value="en">en</option>
-                <option value="ar">ar</option>
-              </select>
+              
             </div>
           </div>
         </div>

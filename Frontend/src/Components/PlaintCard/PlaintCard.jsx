@@ -25,7 +25,7 @@ const PlaintCard = ({ data }) => {
   }/${new Date(data.created_at).getFullYear()} `;
   return (
     <>
-      <div className="border border-slate-300 p-2  rounded-md flex flex-col gap-2 px-5 md:px-10 m-5 font-Poppins capitalize">
+      <div className="border overflow-hidden border-slate-300 p-2  rounded-md flex flex-col gap-2 px-5 md:px-10 m-5 font-Poppins capitalize">
         <div className="flex justify-end gap-1 ">
           <button className="p-2 text-xs md:text-base  rounded-md text-slate-500 hover:bg-slate-200 uppercase">
             edit

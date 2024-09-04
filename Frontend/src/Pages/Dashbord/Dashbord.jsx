@@ -4,39 +4,34 @@ import Header from "../../Components/Header/Header";
 import Create from "../../assets/create.jpeg";
 import Progress from "../../assets/progress.png";
 import { Link } from "react-router-dom";
-import { getPlaints, isObjectEmpty } from "../Dependencies.cjs";
+import { ipAuthorization } from "../Dependencies.cjs";
+import { useSelector } from "react-redux";
 
 const Dashbord = () => {
-  const [plaintes, setPlaintes] = useState([]);
-  const [hasComplaint, setHasComplaint] = useState(false);
-  // const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   const makeRequest = async () => {
-  //     const req = await getPlaints();
-  //     console.log(req);
-  //     debugger;
-  //     if (!isObjectEmpty(req.data)) {
-  //       setPlaintes([...req.data]);
-  //       setHasComplaint(true);
-  //     } else {
-  //       setHasComplaint(false);
-  //     }
-  //     setLoading(false);
-  //   };
-  //   makeRequest();
-  // }, []);
+  const session_id = useSelector(state=>state.user.session_id)
+  const [is_ipAuthorize,seIs_ipAuthorize]=useState(true);
+  const [reloading ,setReloading ] = useState(true);
+
+
+
+  useEffect(()=>{
+    const checkIpAuthorization = async ()=>{
+      console.log(session_id)
+      // debugger;
+      const res = await ipAuthorization(session_id);
+      seIs_ipAuthorize(res.data.ipAuthorization);
+      setReloading(false);
+    }
+    checkIpAuthorization();
+  },[])
 
   return (
     <>
       <Header />
-      {/* {loading ? (
-        <div className="flex justify-center items-center uppercase font-Poppins ">
-          {" "}
-          loading
-        </div>
-      ) : ( */}
-        <AuthComponent>
-          <div className="content flex justify-around">
+      {
+        !reloading ? 
+          <AuthComponent>
+          <div className="content flex flex-col items-center md:flex-row  md:justify-around">
             <div className="item p-5">
               <Link to={"/plaints"}>
                 <div className="hover:scale-[1.1] transition-all duration-[.3s]">
@@ -53,7 +48,9 @@ const Dashbord = () => {
                 </div>
               </Link>
             </div>
-            <div className="item p-5">
+            { 
+              is_ipAuthorize ? 
+              <div className="item p-5">
               <Link to={"/plaint/create"}>
                 <div className="hover:scale-[1.1] transition-all duration-[.3s]">
                   <div className="box border border-solid border-black rounded-md p-1 mb-4 ">
@@ -69,9 +66,12 @@ const Dashbord = () => {
                 </div>
               </Link>
             </div>
+            : ''
+            }
           </div>
         </AuthComponent>
-      {/* )} */}
+      : ''
+      }
     </>
   );
 };

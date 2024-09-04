@@ -8,7 +8,7 @@ const AuthComponent = ({ children, title }) => {
         <div className="container  flex justify-center">
           <div className="form-holder bg-[#ffffff] rounded-md p-5 sm:p-10  relative w-[100%]">
             {title ? (
-              <div className="title text-l md:text-5xl  font-bold font-Poppins py-9 capitalize">
+              <div className="title text-l md:text-3xl lg:text-5xl  font-bold font-Poppins py-3 md:py-6 lg:py-9 capitalize">
                 <h2>{title}</h2>
               </div>
             ) : (

@@ -13,15 +13,9 @@ use function Laravel\Prompts\select;
 
 class ComplaintController extends Controller
 {
-    public function index(){
-        $complaints = Plainte::all();
-        return response()->json([
-            'plaints'=>$complaints,
-        ]);
-    }
     public function userComplaints(Request $request){
         //  Get All Complaint For The Authenticated User ---
-        
+
         $user = $request->user();
         if ($user) {
         $query = "SELECT pl.id ,pl.created_at ,pl.date ,pl.subject ,ps.status FROM plaintes pl
@@ -37,34 +31,38 @@ class ComplaintController extends Controller
         }
         return response()->json(['error' => ['message'=>"User not found"]], 404);
     }
+
+
     public function show(Request $request){
         //  Get All Complaint For Spicific User Using His Id ---
-        
         try {
-        $query ="SELECT pl.* ,ps.status FROM plaintes pl 
-        JOIN plaint_status ps on ps.id = pl.status_id 
-        WHERE pl.id = ?";
+
+        $query ="SELECT pl.* ,ps.status FROM plaintes pl
+                JOIN plaint_status ps on ps.id = pl.status_id
+                WHERE pl.id = ?";
+
         $complaint = DB::select($query, [$request->id]);
             return response()->json($complaint, 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'plaint not found.'], 404);
         }
-
-
     }
 
+    ////    STORE   /////
     public function store(Request $request){
+
         $validationRulres  = [
             'body' => 'required|string',
+            'commune' => 'required',
             'date' => 'required|date',
             'subject'=>'required',
-            ];
-        
-            
+            'auth_session_id'=> 'required'
+        ];
+
         if($request->hasFile('img')){
-                
+
             $validationRulres['img'] = 'image|mimes:jpeg,png,jpg|max:2048';
-            
+
         }
         $validator = Validator::make($request->all(), $validationRulres);
 
@@ -73,29 +71,40 @@ class ComplaintController extends Controller
         }
         $validatedData = $validator->validated();
 
-        //  get the current session id 
-        $currentAuthSession = AuthSession::where('user_id', auth()->id())->latest()->first();
-
-        //  Complaint 
-        $complaint = new Plainte();
-        $complaint->subject = $validatedData['subject'];
-        $complaint->body = $validatedData['body'];
-        $complaint->date = $validatedData['date'];
-        $complaint->auth_session_id = $currentAuthSession->id;
-
-        if($request->hasFile('img')){
-            $file = $request->file('img');
-            $complaint->img = $file->store('images', 'public');
-            
+        //  get the current session
+        $currentAuthSession = AuthSession::where('id', $validatedData['auth_session_id'])->latest()->first();
+        $ipAuthorize = $currentAuthSession->ip->is_authorize;
+        if(!$ipAuthorize){
+             return response()->json(['error' => 'No current authentication session found'], 201);
         }
-        $complaint->save();
-        //  End Complaint
-        
+
+        $complaint = null;
+        if($currentAuthSession){
+
+            $complaint = new Plainte();
+            $complaint->subject = $validatedData['subject'];
+            $complaint->commune_id = (int) $validatedData['commune'];
+            $complaint->body = $validatedData['body'];
+            $complaint->date = $validatedData['date'];
+            $complaint->auth_session_id = $currentAuthSession->id;
+
+            if($request->hasFile('img')){
+                $file = $request->file('img');
+                $complaint->img = $file->store('images', 'public');
+
+            }
+            $complaint->save();
+
+        }else{
+            return response()->json(['error' => 'No current authentication session found'], 401);
+        }
+
+
         return response()->json([
             'message' => 'The Complaint Created Seccessfuly',
             'complaint'=>$complaint,
         ], 201);
-        
-        
+
+
     }
 }

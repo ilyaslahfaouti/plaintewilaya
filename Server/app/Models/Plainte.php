@@ -32,4 +32,7 @@ class Plainte extends Model
     {
         return $this->belongsTo(PlaintStatus::class);
     }
+    public function commune(){
+        return $this->belongsTo(Commune::class);
+    }
 }

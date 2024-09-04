@@ -3,10 +3,12 @@ import Header from "../../Components/Header/Header";
 import AuthComponent from "../../Components/AuthComponent/AuthComponent";
 import { validate, loginin } from "../Dependencies.cjs";
 import { useNavigate } from "react-router-dom";
-import { axiosClient } from "../../api/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { userActons } from "../../store/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,9 +27,15 @@ const Login = () => {
 
       try {
         const res = await loginin(formData);
-        
+        console.log(res)
 
         if (res.status === 201) {
+           const connection_data = {
+            'user':res.data.user,
+            'session_id':res.data.session_id,
+          };
+          
+          dispatch(userActons.connect(connection_data));
           window.localStorage.setItem("ACCESS_TOKEN", res.data.token);
           navigate("/dashbord");
           return "";
@@ -60,7 +68,7 @@ const Login = () => {
       <Header />
       <AuthComponent title={"login"}>
         <div className="form sm:flex justify-center w-[100%] sm:w-auto sm:m-16 ">
-          <form onSubmit={onSubmit} action="" className="">
+          <form onSubmit={onSubmit}  className="">
             <div className="">
               <div className="pl-3 mb-3 ">
                 <label
@@ -77,7 +85,7 @@ const Login = () => {
                   name="email"
                   id="email"
                   className={
-                    " w-[100%] sm:min-w-[22rem]  transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md sm:px-3 py-[2px] border border-gray-300 $ "
+                    " w-[100%] sm:min-w-[22rem]  transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md sm:px-3 py-[2px] border border-gray-300  "
                   }
                 />
                 <div className="error text-sm  text-red-600 pl-[6px]">
@@ -98,7 +106,7 @@ const Login = () => {
                   name="password"
                   id="password"
                   className={
-                    " w-[100%] sm:min-w-[22rem]  transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300 $ "
+                    " w-[100%] sm:min-w-[22rem]  transition-all duration-[.3s] outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-md px-3 py-[2px] border border-gray-300  "
                   }
                 />
                 <div className="error text-sm  text-red-600 pl-[6px]">

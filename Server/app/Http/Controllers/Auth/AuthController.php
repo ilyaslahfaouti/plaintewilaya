@@ -2,24 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-
-use App\Http\Requests\RegisterRequest;
-use App\Models\AuthSession;
 use App\Models\Ip;
 use App\Models\User;
+use App\Models\AuthSession;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        
-        
         $validator = Validator::make($request->all(), [
             'f_name' => 'required|string|max:255',
             'l_name' => 'required|string|max:255',
@@ -42,7 +37,7 @@ class AuthController extends Controller
             'password' => $validatedData['password'],
             'email_verified'=>false,
         ]);
-        
+
         /** @var User $user */
         Auth::login($user);
         $session_id = $this->make_session($request->ip(),$user);
@@ -53,30 +48,27 @@ class AuthController extends Controller
         ], 201);    ////////////
 
     }
-    public function get_current_user(){
 
-        $user = auth()->user();
- 
-        return response()->json([
-            'user'=>$user,
-        ],200);
-    
-    }
 
-            ////  login    ////
+
+            ////  login  ////
     public function login(Request $request){
         $validator = Validator::make($request->all(), [
-            
+
             'email' => 'required|email',
             'password' => 'required|string|min:8',
         ]);
         if ($validator->fails()) {
-            
+
             return response()->json(['errors' => $validator->errors()], 401); ///////////
         }
         $validatedData = $validator->validated();
+        $ip = Ip::firstOrCreate(['ip_address' => $request->ip()]);
+        if (!$ip->is_authorize) {
+            return response()->json(['message' => "il y a un problème avec le processus de connexion s'il vous plaît essayer à nouveau plus tard" ], 401);
+        }
         if (!Auth::attempt($validatedData)) {
-            
+
             return response()->json([
                 'message' => 'Invalid credentials',
             ], 401); ////////
@@ -86,24 +78,20 @@ class AuthController extends Controller
         $user = Auth::user();
         $user->tokens()->delete();
         $token = $user->createToken('authToken')->plainTextToken;
-        $request->session()->regenerate();
-        
-            ///////////
-        $session_id = $this->make_session($request->ip(),$user);
+        session()->regenerate();
+        $session_id = $this->make_session( $ip,$user);
 
 
 
         return response()->json([
             'message' => 'User logged in successfully',
-            'user' => $user,
             'token'=>$token,
-            'session'=>$session_id,
-
-        ], 201);
-        
-    
+            'user' => $user,
+            'session_id'=>$session_id,
+        ], 201); ///////////
     }
 
+         /////  LOGOUT  /////
     public function logout(Request $request) {
         $user = $request->user();
         if ($user) {
@@ -114,30 +102,58 @@ class AuthController extends Controller
                 ->whereNull('date_disconnected')
                 ->update(['date_disconnected' => now()]);
         }
-            
+
             Auth::guard('web')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
+
+            session()->invalidate();
+            session()->regenerateToken();
             return response()->json([
                 'message' => 'test -- test'
-            ], 200);
+            ], 200);    //////////
     }
-
+        /////   EMAIL VERIFICATION  /////
     public function sendEmailVerification(Request $request){
 
         /** @var User $user */
         $user = $request->user();
-        // $user->email_verified = true;
-        // dump($user);
-        
-    }
-    
-    public function make_session($ipAddress,$user){
-        
-        $ip = Ip::firstOrCreate(['ip_address' => $ipAddress]);
-        if (!$ip->is_authorize) {
-            return response()->json(['message' => 'IP address is not authorized'], 403);
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email already verified'], 200);
         }
+
+        $user->sendEmailVerificationNotification();
+        return response()->json([
+            'message' => 'Verification email sent'
+        ], 200); ////////
+    }
+
+    public function verify(Request $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email already verified'], 400);
+        }
+
+        $user->markEmailAsVerified();
+        return redirect('http://localhost:3000/dashbord');  ////////
+    }
+
+    public function ipAuthorization(Request $request){
+        $authSession_id = $request->id;
+        $query = 'SELECT ips.*
+                FROM  auth_sessions a_s
+                JOIN ips on ips.id = a_s.ip_id
+                WHERE a_s.id = ?';
+        $ipAuthorization = DB::select($query,[$authSession_id])[0];
+        return response()->json([
+            'ipAuthorization' => $ipAuthorization->is_authorize,
+        ], 200);
+    }
+
+    public function make_session($ip,$user){
+
+
         $newSession = AuthSession::create([
             'user_id' => $user->id,
             'ip_id' => $ip->id,
@@ -145,4 +161,5 @@ class AuthController extends Controller
         ]);
         return $newSession->id;
     }
+
 }
