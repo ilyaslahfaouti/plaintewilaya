@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import Header from "../../Components/Header/Header";
 import AuthComponent from "../../Components/AuthComponent/AuthComponent";
 import { emailVerify } from "../Dependencies.cjs";
+
 const EmailVerification = () => {
   const [countdownTime, setCountdownTime] = useState(
     localStorage.getItem("LAST_EMAIL_VERIFICATION")
   );
   const [isDisabled, setIsDisabled] = useState(false);
 
+  useEffect(()=>{document.title="Verification"});
+
   const buttonClick = async () => {
     setIsDisabled(true);
     const verifyRequest = await emailVerify();
+    console.log(verifyRequest)
     if (verifyRequest.status === 200) {
       localStorage.setItem("LAST_EMAIL_VERIFICATION", new Date().toISOString());
     } else {
@@ -24,7 +28,9 @@ const EmailVerification = () => {
         setIsDisabled(true);
       }
     }
+    
   }, []);
+  useEffect(()=>console.log(isDisabled),[isDisabled])
 
   return (
     <>
@@ -53,7 +59,7 @@ const EmailVerification = () => {
                   isDisabled ? "bg-blue-400" : "bg-blue-600"
                 } text-[#ffff] capitalize font-poppins font-medium p-1 px-3 rounded-md text-lg transition-all duration-[.2s] `}
               >
-                {isDisabled ? "envoyé" : "renvoyer"}
+                {isDisabled ? "renvoyer" : "envoyé"}
               </button>
               <span className="text-xs md:text-base">
                 {isDisabled ? "le courriel a été envoyé " : ""}

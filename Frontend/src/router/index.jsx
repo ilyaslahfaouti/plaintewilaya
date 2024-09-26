@@ -4,32 +4,33 @@ import ProtectedLayout from "../Layouts/ProtectedLayout";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
-import Dashbord from "../Pages/Dashbord/Dashbord";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 import NotFound from "../Pages/NotFound/NotFound";
 import EmailVerification from "../Pages/EmailVerification/EmailVerification";
 import PlaintForm from "../Pages/PlaintForm/PlaintForm";
 import Plaints from "../Pages/Plaints/Plaints";
 import SeccessPlaint from "../Pages/SeccessPlaint/SeccessPlaint";
 import PlaintDetails from "../Pages/PlaintDetails/PlaintDetails";
+import Links from "./Links";
 
 export const router = createBrowserRouter([
   {
     element: <GeussLayaout />,
     children: [
-      { path: "/", element: <Home /> },
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
+      { path: Links.home, element: <Home /> },
+      { path: Links.login, element: <Login /> },
+      { path: Links.register, element: <Register /> },
     ],
   },
   {
     element: <ProtectedLayout />,
     children: [
-      { path: "/verification", element: <EmailVerification /> },
-      { path: "/dashbord", element: <Dashbord /> },
-      { path: "/plaint/create", element: <PlaintForm /> },
-      { path: "/seccess", element: <SeccessPlaint /> },
-      { path: "/plaints", element: <Plaints /> },
-      { path: "/plaint/detail", element: <PlaintDetails /> },
+      { path: Links.verification, element: <EmailVerification /> },
+      { path: Links.dashboard, element: <Dashboard /> },
+      { path: Links.complaint.create, element: <PlaintForm /> },
+      { path: Links.complaint.success, element: <SeccessPlaint /> },
+      { path: Links.complaint.index, element: <Plaints /> },
+      { path: Links.complaint.show, element: <PlaintDetails /> },
     ],
   },
 

@@ -8,8 +8,9 @@ import {
   addPlaint,
   getCommunes,
 } from "../Dependencies.cjs";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Links from "../../router/Links";
 
 const PlaintForm = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const PlaintForm = () => {
   const [errs, setErrs] = useState({});
   const auth_session_id = useSelector(state => state.user.session_id)
   
+  useEffect(()=>{document.title="Créer Une Plainte"});
   useEffect(() => {
     
     const response = async () => {
@@ -53,12 +55,17 @@ const PlaintForm = () => {
       }
 
       const res = await addPlaint(data);
+      
       if (res.status === 201) {
-        navigate("/seccess", { state: { ...res.data.complaint } });
+        navigate(Links.complaint.success, { state: { ...res.data.complaint } });
       } else {
         if (res.response.data.errors) {
           setErrs({ ...res.response.data.errors });
         }
+        if(res.response.data.message){
+          navigate(Links.dashboard);
+        }
+        
       }
     }
 

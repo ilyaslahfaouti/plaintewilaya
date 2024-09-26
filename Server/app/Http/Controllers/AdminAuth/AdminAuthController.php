@@ -22,8 +22,10 @@ class AdminAuthController extends Controller
         ]);
 
         $admin = Admin::where('email', $request->email)->first();
+        info($admin && Hash::check($request->password, $admin->password));
         if ($admin && Hash::check($request->password, $admin->password)) {
-                Auth::login($admin);
+                Auth::guard("Admin")->login($admin);
+
                 session()->regenerate();
                 return redirect()->route('admin.dashboard');
 
@@ -39,19 +41,24 @@ class AdminAuthController extends Controller
     public function logout(Request $request)
     {
 
-    Auth::logout();
+    Auth::guard('Admin')->logout();
     return to_route('login');
     }
 
-    public function store(Request $request){
-
+    public function register(Request $request){
+        // dd($request);
+        $request->validate([
+            'name'=>'required|string',
+            'email'=>'required|email|unique:admins',
+            'password'=>'required|min:6',
+        ]);
 
         $admin = new Admin();
         $admin->name = $request->name;
         $admin->email = $request->email;
         $admin->password = Hash::make($request->password); // Ensure password is hashed
         $admin->save();
-        return to_route('login');
+        return to_route('admin.dashboard');
     }
     public function index()
     {

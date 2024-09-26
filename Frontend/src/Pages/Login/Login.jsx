@@ -5,6 +5,8 @@ import { validate, loginin } from "../Dependencies.cjs";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActons } from "../../store/userSlice";
+import Links from "../../router/Links";
+import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,6 +16,7 @@ const Login = () => {
     password: "",
   });
   const [errs, setErrs] = useState({});
+  useEffect(()=>{document.title="Connexion"});
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -27,17 +30,15 @@ const Login = () => {
 
       try {
         const res = await loginin(formData);
-        console.log(res)
 
         if (res.status === 201) {
            const connection_data = {
             'user':res.data.user,
             'session_id':res.data.session_id,
           };
-          
           dispatch(userActons.connect(connection_data));
           window.localStorage.setItem("ACCESS_TOKEN", res.data.token);
-          navigate("/dashbord");
+          navigate(Links.dashboard);
           return "";
         }
 
@@ -51,7 +52,6 @@ const Login = () => {
           });
         }
       } catch (error) {
-        console.log("errrrrrrrrr");
         console.log("catched: ", error);
       }
     }

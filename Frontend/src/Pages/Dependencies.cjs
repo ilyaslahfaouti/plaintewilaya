@@ -4,9 +4,10 @@ import { axiosClient } from "../api/axios";
 export const getCommunes = async () => {
   try {
     const csrf = await axiosClient.get("/sanctum/csrf-cookie");
-    const res = await fetch("http://localhost:8000/api/communes");
-    const data = res.json();
-    return data;
+    const res = await axiosClient.get("/api/communes");
+    // const res = await fetch("http://localhost:8000/api/communes");
+    // const data = res.json();
+    return res.data;
   } catch {
     console.log("err");
   }
@@ -74,6 +75,7 @@ export const isObjectEmpty = (objectName) => {
 export const addPlaint = async (data) => {
   try {
     const req = await axiosClient.post("/api/complaint/store", data);
+    console.log('error Message',req)
     return req;
   } catch (err) {
     console.log(err);
@@ -106,6 +108,14 @@ export const ipAuthorization = async (id)=>{
    const res = await axiosClient.get(`/api/session/${id}/ipAuthorization`);
     return res
   } catch (error) {
-    console.log(error)
+    console.log('error ', error.data.ipAuthorization)
   }
 }
+export const dateFormating = (index)=>{
+  const date = new Date(index);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() returns 0-indexed months
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+

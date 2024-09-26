@@ -3,7 +3,7 @@
 @section('title','General')
 @section('content')
 <div>
-    <h2 class="text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">general</h2>
+    <h2 class="sm:text-2xl lg:text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">general</h2>
 </div>
 <div class="flex-1 bg-white p-4 text-black ">
     {{-- header --}}
@@ -12,7 +12,7 @@
     @foreach ($complaints as $key => $value)
         <div class="w-1/3 text-center">
             <h3 class="text-6xl font-semibold py-4 ">{{ $value->count }}</h3>
-            <p>{{ $value->status }}</p>
+            <p class="uppercase">{{ $value->status }}</p>
         </div>
         @if ($key == 2)
             @break

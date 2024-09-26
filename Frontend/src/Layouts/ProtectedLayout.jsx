@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { axiosClient } from "../api/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { userActons } from "../store/userSlice";
+import Links from "../router/Links";
 
 const ProtectedLayout = () => {
   const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ const ProtectedLayout = () => {
 
   useEffect(() => {
     if (!window.localStorage.getItem("ACCESS_TOKEN")) {
-      navigate("/login");
+      navigate(Links.login);
       return;
     } else {
       if (!user) {
@@ -27,9 +28,9 @@ const ProtectedLayout = () => {
         const res = await axiosClient.get("/api/user");
         dispatch(userActons.updateUser(res.data));
         if (!res.data.email_verified_at) {
-          navigate("/verification");
+          navigate(Links.verification);
         } else {
-          navigate("/dashbord");
+          navigate(Links.dashboard);
         }
         setLoading(false);
       } catch (error) {

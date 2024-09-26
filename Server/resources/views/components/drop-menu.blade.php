@@ -23,6 +23,9 @@
           <a href="{{ route('ip.index') }}"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white capitalize ">les ips</a>
         </li>
         <li>
+          <a href="{{ route('admin.create') }}"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white capitalize ">nouvel administrateur</a>
+        </li>
+        <li>
           <form method="POST" action="{{ route('logout') }}" >@csrf <button class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">Sign out</button></form>
         </li>
       </ul>

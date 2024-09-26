@@ -2,8 +2,11 @@
 
 @section('title','cree un admin')
 @section('content')
+<div>
+    <h2 class="sm:text-2xl lg:text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">enregistrer un nouvel administrateur</h2>
+</div>
  <div class="absolute bottom-[50%] right-[50%] transform translate-x-[50%] translate-y-[50%]">
-    <form method="POST" action="{{ route('admin.store') }}" >
+    <form method="POST" action="{{ route('admin.register') }}" >
         @csrf
         <div class="p-6">
             <div class="p-2">

@@ -7,6 +7,7 @@ import { userActons } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../Dependencies";
 import { Link } from "react-router-dom";
+import Links from "../../router/Links";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -31,15 +32,15 @@ const Header = () => {
   const attemptLogout = async () => {
     dispatch(userActons.forgetUser());
     const res = await logout();
-    navigate("/login");
+    navigate(Links.login);
   };
   return (
     <>
-      <header className=" bg-[#ffff] rounded-b-lg z-10 ">
+      <header className="header  rounded-lg z-10 mt-3 mx-2 bg-white">
         <div className="container m-auto">
           <div className=" flex justify-between  items-center px-2 gap-1 ">
             <div className="logo">
-              <Link to={"/"}>
+              <Link to={Links.home}>
                 <img
                   src={Logo}
                   alt="logo"

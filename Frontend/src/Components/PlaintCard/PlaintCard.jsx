@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPlaintId } from "../../store/plaintSlice";
+import Links from "../../router/Links";
 
 const PlaintCard = ({ data }) => {
   // const user = useSelector((state) => state.user.user);
@@ -27,14 +28,14 @@ const PlaintCard = ({ data }) => {
     <>
       <div className="border overflow-hidden border-slate-300 p-2  rounded-md flex flex-col gap-2 px-5 md:px-10 m-5 font-Poppins capitalize">
         <div className="flex justify-end gap-1 ">
-          <button className="p-2 text-xs md:text-base  rounded-md text-slate-500 hover:bg-slate-200 uppercase">
+          {/* <button className="p-2 text-xs md:text-base  rounded-md text-slate-500 hover:bg-slate-200 uppercase">
             edit
           </button>
           <button className="p-2 text-xs md:text-base  rounded-md text-red-500 hover:bg-red-100 uppercase">
             delete
-          </button>
+          </button> */}
 
-          <Link to={`/plaint/detail/`}>
+          <Link to={Links.complaint.show}>
             <button
               onClick={() => dispatch(setPlaintId(data.id))}
               className="p-2 text-xs md:text-base rounded-md text-[#5844ef] hover:bg-[#5844ef73] uppercase"

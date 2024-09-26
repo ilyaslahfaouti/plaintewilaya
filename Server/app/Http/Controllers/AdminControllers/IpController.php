@@ -44,7 +44,7 @@ class IpController extends Controller
     }
 
     static function userIps($id){
-        $userQuery = 'SELECT ips.ip_address ,ips.is_authorize from ips
+        $userQuery = 'SELECT DISTINCT ips.ip_address ,ips.is_authorize from ips
                     JOIN auth_sessions a_s ON a_s.ip_id = ips.id
                     JOIN users u on u.id = a_s.user_id
                     where u.id = ?';

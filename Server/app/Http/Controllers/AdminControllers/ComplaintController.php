@@ -92,7 +92,7 @@ class ComplaintController extends Controller
     static function getCpl($id,$status_id){
         if(!is_null($id)){
 
-            $query = "SELECT p.id ,p.date ,p.subject,p.body,p.img ,ps.status as 'status',
+            $query = "SELECT p.id as 'complaint_id',u.id as 'user_id' ,p.date ,p.subject,p.body,p.img ,ps.status as 'status',
                         CONCAT(pcm.nom_fr , ' ',pcm.nom_ar) as 'plainte_commune' ,
                         CONCAT(u.f_name , ' ',u.l_name) as 'full_name' ,
                         CONCAT(ucm.nom_fr ,' ',ucm.nom_ar) as 'user_commune'
@@ -103,7 +103,7 @@ class ComplaintController extends Controller
                         JOIN communes ucm on ucm.id = u.commune
                         JOIN communes pcm on pcm.id = p.commune_id
                         WHERE p.id = ?";
-            $query2 = "SELECT a_as.assignment,  p.id ,p.date ,p.subject,p.body,p.img ,ps.status as 'status',
+            $query2 = "SELECT a_as.assignment, p.id as 'complaint_id',u.id as 'user_id'  ,p.date ,p.subject,p.body,p.img ,ps.status as 'status',
                         CONCAT(pcm.nom_fr , ' ',pcm.nom_ar) as 'plainte_commune' ,
                         CONCAT(u.f_name , ' ',u.l_name) as 'full_name' ,
                         CONCAT(ucm.nom_fr ,' ',ucm.nom_ar) as 'user_commune'

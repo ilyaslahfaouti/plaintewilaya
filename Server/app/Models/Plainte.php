@@ -14,13 +14,13 @@ class Plainte extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'user_id',
+        'auth_session_id',
         'subject',
         'body',
         'date',
         'img',
         'status_id',
-        'auth_session_id',
+        'commune_id',
 
     ];
 
@@ -28,7 +28,7 @@ class Plainte extends Model
         return $this->belongsTo(AuthSession::class);
     }
 
-    public function status()
+    public function plaint_status()
     {
         return $this->belongsTo(PlaintStatus::class);
     }

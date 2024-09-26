@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Links from "../../router/Links";
 
 const AuthComponent = ({ children, title }) => {
   return (
@@ -19,14 +20,14 @@ const AuthComponent = ({ children, title }) => {
               {title === "register" ? (
                 <span>
                   vous avez déjà un compte{" "}
-                  <Link to={"/login"} className="text-blue-500 underline">
+                  <Link to={Links.login} className="text-blue-500 underline">
                     Connectez-vous
                   </Link>
                 </span>
               ) : title === "login" ? (
                 <span>
                   vous n'avez pas de compte{" "}
-                  <Link to={"/register"} className="text-blue-500 underline">
+                  <Link to={Links.register} className="text-blue-500 underline">
                     S'inscrire
                   </Link>
                 </span>

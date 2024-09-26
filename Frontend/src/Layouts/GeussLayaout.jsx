@@ -2,6 +2,7 @@ import { use } from 'i18next'
 import React, { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { axiosClient } from '../api/axios'
+import Links from '../router/Links'
 
 
 const GeussLayout = () => {
@@ -10,7 +11,7 @@ const GeussLayout = () => {
  
   useEffect(()=>{
     if(window.localStorage.getItem('ACCESS_TOKEN')){
-      navigate('/dashbord')
+      navigate(Links.dashboard)
     }
   },[])
   return (

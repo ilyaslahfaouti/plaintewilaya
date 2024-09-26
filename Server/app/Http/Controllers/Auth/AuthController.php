@@ -8,6 +8,7 @@ use App\Models\AuthSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,6 +29,7 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 420);   ///////
         }
         $validatedData = $validator->validated();
+        info($validatedData);
         $user = User::create([
             'f_name' => $validatedData['f_name'],
             'l_name' => $validatedData['l_name'],
@@ -35,15 +37,20 @@ class AuthController extends Controller
             'commune' => (int) $validatedData['commune'],
             'tel' => $validatedData['tel'],
             'password' => $validatedData['password'],
-            'email_verified'=>false,
         ]);
 
         /** @var User $user */
         Auth::login($user);
-        $session_id = $this->make_session($request->ip(),$user);
+
+        //// create new ip or using existing ip address
+        $ip = Ip::firstOrCreate(['ip_address' => $request->ip()]);
+        //// make new session
+        $session_id = $this->make_session($ip,$user);
+
         return response()->json([
             'message' => 'User registered and logged in successfully',
             'token' => $user->createToken('API TOKEN')->plainTextToken,
+            'user'=>$user,
             'session'=>$session_id,
         ], 201);    ////////////
 
@@ -141,13 +148,14 @@ class AuthController extends Controller
 
     public function ipAuthorization(Request $request){
         $authSession_id = $request->id;
-        $query = 'SELECT ips.*
+        $query = 'SELECT ips.is_authorize
                 FROM  auth_sessions a_s
                 JOIN ips on ips.id = a_s.ip_id
                 WHERE a_s.id = ?';
-        $ipAuthorization = DB::select($query,[$authSession_id])[0];
+        $authorization = DB::select($query,[$authSession_id]);
+        info($authorization[0]->is_authorize);
         return response()->json([
-            'ipAuthorization' => $ipAuthorization->is_authorize,
+            'ipAuthorization' => $authorization[0]->is_authorize,
         ], 200);
     }
 

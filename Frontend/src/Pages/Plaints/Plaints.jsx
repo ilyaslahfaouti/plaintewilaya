@@ -7,15 +7,16 @@ import { getPlaints } from "../Dependencies.cjs";
 const Plaints = () => {
   const [loading, setLoading] = useState(true);
   const [plaintes, setPlaintes] = useState([]);
-  const [error, setError] = useState("no Data Found");
+  const [error, setError] = useState("Aucune donnée disponible");
+  useEffect(()=>{document.title="Les Plaintes"});
   useEffect(() => {
     const makeRequest = async () => {
       const req = await getPlaints().then((res) => {
         setPlaintes([...res.data]);
       });
+      setLoading(false);
     };
     makeRequest();
-    setLoading(false);
   }, []);
 
   return (

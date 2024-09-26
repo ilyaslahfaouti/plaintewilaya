@@ -5,7 +5,7 @@
 @section('content')
 
     <div>
-        <h2 class="text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">les plaintes</h2>
+        <h2 class="sm:text-2xl lg:text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">les plaintes</h2>
     </div>
     <form method="POST" action="{{route("complaints.search")}}">
         @csrf
@@ -37,7 +37,7 @@
             </thead>
             <tbody>
                 @foreach ($complaints as $key => $item)
-                <tr class="border-b {{ $item->status == 'En Attente ...' ? 'bg-green-200 hover:bg-green-300' : '' }} hover:bg-gray-100 cursor-pointer" onclick="window.location='{{ route('complaint.show',$item->id) }}'">
+                <tr class="border-b {{ $item->status == 'traitement' ? 'bg-green-200 hover:bg-green-300' : '' }} hover:bg-gray-100 cursor-pointer" onclick="window.location='{{ route('complaint.show',$item->id) }}'">
                     <td class="px-6 py-4 capitalize w-1/12 text-xs sm:px-6 sm:py-4 sm:text-sm">
                         {{ $item->full_name }}
                     </td>
@@ -46,7 +46,7 @@
                         {{ $item->subject }}
 
                     </td>
-                    <td class="px-4 py-2 capitalize w-1/6 sm:px-6 sm:py-4  {{ $item->status == 'Vérifié' ? 'text-green-400':( $item->status == 'Annulé' ? 'text-red-400' : '')  }}">
+                    <td class="px-4 py-2 capitalize w-1/6 sm:px-6 sm:py-4  {{ $item->status == 'vérifié' ? 'text-green-400':( $item->status == 'annulé' ? 'text-red-400' : '')  }}">
 
                         {{ $item->status  }}
 

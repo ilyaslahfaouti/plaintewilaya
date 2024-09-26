@@ -10,33 +10,40 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::prefix('admin')->middleware('guest:Admin')->group(function () {
+    Route::view('/login','admin.welcome')->name('login');
+    Route::post('/login',[AdminAuthController::class,'login'])->name('login');
 
 
 
-Route::view('/admin/create','admin.create')->name('register')->middleware('guest');
-Route::post('/admin/store',[AdminAuthController::class,'store'])->name('admin.store');
+});
+Route::prefix('admin')->middleware('auth:Admin')->group(function () {
 
-Route::view('/login','admin.welcome')->name('login')->middleware('guest');
-Route::post('login',[AdminAuthController::class,'login'])->name('login')->middleware('guest');
-Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout')->middleware('auth');
-
-
-Route::get('/admin/dashboard',[staticPagesController::class, 'dashboard'])->middleware('auth')->name('admin.dashboard');
-Route::get('/',[staticPagesController::class, 'dashboard'])->middleware('auth');
-
-
-Route::get('/admin/plaintes',[ComplaintController::class,'index'])->middleware('auth')->name('complaints.index');
-Route::post('/admin/plaintes/search',[ComplaintController::class,'search'])->middleware('auth')->name('complaints.search');
-Route::get('/admin/plaint/{plainte}/show',[ComplaintController::class, 'show'])->middleware('auth')->name('complaint.show');
-Route::get('/admin/commune/{id}/plaintes',[ComplaintController::class,'getCplByCmId'])->name('complaintsByCommune');
-Route::put('/admin/plainte/{plainte}/verify',[ComplaintController::class,'verifyPlainte'])->name('plainte.verify');
+    Route::view('/create','admin.create')->name('admin.create');
+    Route::post('/store',[AdminAuthController::class,'register'])->name('admin.register');
+    Route::get('/dashboard',[staticPagesController::class, 'dashboard'])->name('admin.dashboard');
+    Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
+    Route::get('/',[staticPagesController::class, 'dashboard']);
+    Route::get('/plaintes',[ComplaintController::class,'index'])->name('complaints.index');
+    Route::post('/plaintes/search',[ComplaintController::class,'search'])->name('complaints.search');
+    Route::get('/plaint/{plainte}/show',[ComplaintController::class, 'show'])->name('complaint.show');
+    Route::get('/commune/{id}/plaintes',[ComplaintController::class,'getCplByCmId'])->name('complaintsByCommune');
+    Route::put('/plainte/{plainte}/verify',[ComplaintController::class,'verifyPlainte'])->name('plainte.verify');
+});
 
 
-Route::post('/admin/user/search',[UserController::class,'search'])->middleware('auth')->name('user.search');
-Route::get('/admin/user/{user}/show',[UserController::class, 'show'])->middleware('auth')->name('user.show');
-Route::get('/admin/users',[UserController::class,'index'])->middleware('auth')->name('user.index');
 
-Route::post('/admin/ip/search',[IpController::class,'search'])->middleware('auth')->name('ip.search');
-Route::get('/admin/ip/{ip}/authorization',[IpController::class, 'authorization'])->middleware('auth')->name('ip.authorization');
-Route::get('/admin/ips',[IpController::class,'index'])->middleware('auth')->name('ip.index');
+
+
+
+
+
+
+Route::post('/admin/user/search',[UserController::class,'search'])->middleware('auth:Admin')->name('user.search');
+Route::get('/admin/user/{user}/show',[UserController::class, 'show'])->middleware('auth:Admin')->name('user.show');
+Route::get('/admin/users',[UserController::class,'index'])->middleware('auth:Admin')->name('user.index');
+
+Route::post('/admin/ip/search',[IpController::class,'search'])->middleware('auth:Admin')->name('ip.search');
+Route::get('/admin/ip/{ip}/authorization',[IpController::class, 'authorization'])->middleware('auth:Admin')->name('ip.authorization');
+Route::get('/admin/ips',[IpController::class,'index'])->middleware('auth:Admin')->name('ip.index');
 

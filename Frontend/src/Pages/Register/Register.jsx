@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { getCommunes, validate, signup } from "./../Dependencies.cjs";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
+import Links from "../../router/Links";
 
 const Register = () => {
   const [communes, setCommunes] = useState([]);
@@ -18,6 +19,7 @@ const Register = () => {
     password_confirmation: "",
   });
   const [errs, setErrs] = useState({});
+  useEffect(()=>{document.title="S'inscrire"});
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -59,7 +61,7 @@ const Register = () => {
 
         if (response.status === 201) {
           window.localStorage.setItem("ACCESS_TOKEN", response.data.token);
-          navigate("/verification");
+          navigate(Links.verification);
 
           return "";
         }
@@ -79,7 +81,7 @@ const Register = () => {
       <AuthComponent title="register">
         <div className="form ">
           <form action="" onSubmit={handelSubmit}>
-            <div action="" className="flex flex-col md:grid md:grid-cols-2">
+            <div  className="flex flex-col md:grid md:grid-cols-2">
               {/* field */}
               <div className=" p-2">
                 <label
@@ -185,7 +187,7 @@ const Register = () => {
 
                   {communes.map((item, key) => (
                     <option key={key} value={item.id}>
-                      {item.nom_ar}
+                      {item.nom_fr} - {item.nom_ar}
                     </option>
                   ))}
                 </select>

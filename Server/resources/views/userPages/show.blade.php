@@ -7,13 +7,13 @@
 @section('content')
 <div>
     <div>
-        <h2 class="text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">Utilisateur Détail</h2>
+        <h2 class="sm:text-2xl lg:text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">Utilisateur Détail</h2>
     </div>
     <div class=" m-2 p-2 bg-gray-100 rounded-md">
         <div>
             <h4 class="p-2 font-semibold underline text-xl capitalize">l'utilisateur :</h4>
             <div class="flex justify-around flex-col ps-3">
-                <p class=" capitalize  ">le nom complet : <span class="font-semibold uppercase hover:text-blue-500"><a href="#">{{ $userInfo->full_name}}</a></span></p>
+                <p class=" capitalize  ">le nom complet : <span class="font-semibold uppercase hover:text-blue-500">{{ $userInfo->full_name}}</span></p>
                 <p class=" capitalize  ">le telephone : <span class="font-semibold">{{ $userInfo->tel }}</span></p>
                 <p class="">l'email address : <span class="font-semibold">{{ $userInfo->email }}</span> <span class="text-gray-600">({{$userInfo->email_verified ? 'vérifié': 'non vérifié'}})</span></p>
                 <p class=" capitalize  ">la commune : <span class="font-semibold">{{ $userInfo->commune }}</span></p>

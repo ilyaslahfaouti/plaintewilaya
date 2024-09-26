@@ -5,7 +5,7 @@
 @section('content')
 
     <div>
-        <h2 class="text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">les utilisatuers</h2>
+        <h2 class="sm:text-2xl lg:text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">les utilisatuers</h2>
     </div>
     <form method="POST" action="{{route('user.search')}}">
         @csrf
@@ -23,7 +23,7 @@
                         <th scope="col" class="px-3 py-2 sm:px-6 sm:py-3 text-start">
                             nom complet
                         </th>
-                        <th scope="col" class="px-3 py-2 sm:px-6 sm:py-3  text-start">
+                        <th scope="col" class="hidden sm:block px-3 py-2 sm:px-6 sm:py-3 text-start">
                             telephone
                         </th>
                         <th scope="col" class="px-3 py-2 sm:px-6 sm:py-3 text-start">
@@ -44,23 +44,17 @@
                     <td class="px-3 py-4 capitalize w-2/6 text-xs sm:px-6 sm:py-4 sm:text-sm">
                         {{ $item->full_name }}
                     </td>
-
-                    <td class="px-3 py-4 capitalize  text-xs sm:px-6 sm:py-4 sm:text-sm">
+                    <td class="hidden sm:block px-3 py-4 capitalize  text-xs sm:px-6 sm:py-4 sm:text-sm">
                         {{ $item->tel }}
-
                     </td>
                     <td class="px-3 py-4 w-2/6 sm:px-6 sm:py-4 ">
-
                         {{ $item->email}}
-
                     </td>
                     <td class="px-3 py-4 capitalize w-1/6 sm:px-6 sm:py-4">
                         {{ $item->commune  }}
-
                     </td>
                     <td class="hidden md:block px-2 py-4 capitalize w-3/6  sm:px-6 sm:py-4">
                         {{ $item->complaintes_counts }}
-
                     </td>
                 </tr>
                 @endforeach

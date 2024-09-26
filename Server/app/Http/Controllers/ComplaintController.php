@@ -37,8 +37,10 @@ class ComplaintController extends Controller
         //  Get All Complaint For Spicific User Using His Id ---
         try {
 
-        $query ="SELECT pl.* ,ps.status FROM plaintes pl
-                JOIN plaint_status ps on ps.id = pl.status_id
+        $query ="SELECT pl.* ,ps.status,a_s.assignment as 'assignment'
+                FROM plaintes pl
+                LEFT JOIN plaint_status ps on ps.id = pl.status_id
+                LEFT JOIN admin_assignments a_s on a_s.plainte_id=pl.id
                 WHERE pl.id = ?";
 
         $complaint = DB::select($query, [$request->id]);
@@ -75,10 +77,11 @@ class ComplaintController extends Controller
         $currentAuthSession = AuthSession::where('id', $validatedData['auth_session_id'])->latest()->first();
         $ipAuthorize = $currentAuthSession->ip->is_authorize;
         if(!$ipAuthorize){
-             return response()->json(['error' => 'No current authentication session found'], 201);
+             return response()->json(['error_message' => 'No current authentication session found'], 220);
         }
 
         $complaint = null;
+
         if($currentAuthSession){
 
             $complaint = new Plainte();
@@ -98,7 +101,6 @@ class ComplaintController extends Controller
         }else{
             return response()->json(['error' => 'No current authentication session found'], 401);
         }
-
 
         return response()->json([
             'message' => 'The Complaint Created Seccessfuly',

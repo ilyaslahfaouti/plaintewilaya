@@ -12,6 +12,9 @@
         <li>
             <a href="{{ route('ip.index') }}" class="block px-4 py-2 rounded-md text-center  capitalize hover:bg-[#6567EE] hover:text-white lg:w-[15rem] ">ips</a>
         </li>
+        <li>
+            <a href="{{ route('admin.create') }}" class="block px-4 py-2 rounded-md text-center  capitalize hover:bg-[#6567EE] hover:text-white lg:w-[15rem] ">nouvel administrateur</a>
+        </li>
     </ul>
 </div>
 

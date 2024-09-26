@@ -5,7 +5,7 @@
 @section('content')
 
     <div>
-        <h2 class="text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">les adresse IPs</h2>
+        <h2 class="sm:text-2xl lg:text-4xl font-bold uppercase bg-green-600 text-white px-4 py-2">les adresse IPs</h2>
     </div>
     <form method="POST" action="{{route('ip.search')}}">
         @csrf
